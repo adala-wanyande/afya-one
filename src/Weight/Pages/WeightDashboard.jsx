@@ -2,6 +2,7 @@ import React from 'react'
 import NewWeightEntryPage from './NewWeightEntryPage';
 import SetNewTargetWeightPage from './SetNewTargetWeightPage';
 import WeightEntryComponent from '../Components/WeightEntryComponent';
+import LineGraph from '../Components/LineGraph';
 import FullWeightHistoryPage from './FullWeightHistoryPage';
 import Title from '../Components/Title';
 import { Box, Text, Progress } from '@chakra-ui/react';
@@ -13,7 +14,9 @@ const WeightDashboard = () => {
         {/* User Icon */}
         {/* Filter Dropdown Menu for Weight Progression Graph */}
         {/* Weight Progression Graph */}
-
+        <Box p={32}>
+          <LineGraph></LineGraph>
+        </Box>
         <Text>Starting Weight: 72.5 kg</Text>
         <Text>Current Weight: 73.5 kg</Text>
         <Text>Target Weight: 78.0kg</Text>
