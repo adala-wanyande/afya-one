@@ -1,11 +1,9 @@
 import React from 'react'
 import WeightInput from '../Components/WeightInput'
 import Calendar from '../Components/Calendar'
-import Title from '../Components/Title'
 import {
   useDisclosure,
   Button,
-  Input,
   Drawer,
   DrawerBody,
   DrawerFooter,
@@ -14,14 +12,15 @@ import {
   DrawerContent,
   DrawerCloseButton,
 } from '@chakra-ui/react'
+import { AddIcon } from '@chakra-ui/icons'
 
 const NewWeightEntryPage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
     <>
-      <Button onClick={onOpen}>Open</Button>
-      <Drawer isOpen={isOpen} onClose={onClose} size='full'>
+      <Button onClick={onOpen} rightIcon={<AddIcon />}>Add New Weight</Button>
+      <Drawer placement='bottom' isOpen={isOpen} onClose={onClose} size='full'>
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />

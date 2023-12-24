@@ -1,9 +1,9 @@
-import NewWeightEntryPage from './Weight/Pages/NewWeightEntryPage';
+import WeightDashboard from "./Weight/Pages/WeightDashboard";
 
 function App() {
   return (
     <div className="App">
-      <NewWeightEntryPage></NewWeightEntryPage>
+      <WeightDashboard></WeightDashboard>
     </div>
   );
 }
