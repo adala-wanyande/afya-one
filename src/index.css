@@ -16,13 +16,6 @@ code {
     monospace;
 }
 
-.graph-container {
-  width: 400px;
-  height: 200px;
-}
-
-.line {
-  fill: none;
-  stroke: blue;
-  stroke-width: 2px;
+option {
+  background-color: #16172E; /* May not work consistently across browsers */
 }

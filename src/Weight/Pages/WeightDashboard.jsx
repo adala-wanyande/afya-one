@@ -5,39 +5,102 @@ import WeightEntryComponent from '../Components/WeightEntryComponent';
 import LineChart from '../Components/LineChart';
 import FullWeightHistoryPage from './FullWeightHistoryPage';
 import Title from '../Components/Title';
-import { Box, Text, Progress } from '@chakra-ui/react';
-
+import { Box, Text, Progress, Avatar, WrapItem, Flex, Spacer, Select } from '@chakra-ui/react';
 
 const WeightDashboard = () => {
+  function calculateWeightProgressPercentage(startingWeight, targetWeight, currentWeight) {
+    // Ensure starting weight is not greater than target weight
+    if (startingWeight > targetWeight) {
+      throw new Error("Starting weight cannot be greater than target weight.");
+    }
+  
+    // Calculate total weight loss needed
+    const totalWeightToLose = startingWeight - targetWeight;
+  
+    // Calculate weight already lost
+    const weightLost = startingWeight - currentWeight;
+  
+    // Calculate percentage of progress
+    const progressPercentage = (weightLost / totalWeightToLose) * 100;
+  
+    // Return the percentage, rounded to two decimal places
+    return Math.round(progressPercentage * 100) / 100;
+  }
+  
   return (
-    <Box>
-        {/* User Icon */}
-        {/* Filter Dropdown Menu for Weight Progression Graph */}
-        {/* Weight Progression Graph */}
+    <Flex bg="#16172E">
+      <Box w="50%" p={4} px={8}>
+        <Box>
+          <Flex p={8} alignItems="center">
+            <WrapItem>
+              <Avatar size='md' name='Christian Nwamba' src='https://bit.ly/code-beast' />{' '}
+            </WrapItem>
+            <Spacer />
+            <Select
+              bg='#16172E'
+              borderColor='#f26c6d'
+              color='#f26c6d'
+              width={180}
+              minWidth={100}
+              alignItems="center"
+            >
+              <option>All records</option>
+              <option>Past 6 months</option>
+              <option>Past 3 months</option>
+              <option>Past month</option>
+              <option>Past week</option>
+            </Select>
+          </Flex>
+        </Box> 
         <Box>
           <LineChart></LineChart>
         </Box>
-        <Text>Starting Weight: 72.5 kg</Text>
-        <Text>Current Weight: 73.5 kg</Text>
-        <Text>Target Weight: 78.0kg</Text>
-
-        {/* Progression Bar */}
-        <Box p={16}>
-            <Progress value={80} />
+        <Box mt={16} px={8}>
+          <Flex>
+            <Flex direction='column'>
+              <Text color='#8A8B96'>Starting Weight</Text>
+              <Text fontSize='xl' textAlign='center' color='#8A8B96'>72.5 kg</Text>
+            </Flex>
+            <Spacer/>
+            <Flex flexDirection='column'>
+              <Text color='#FFFFFF'>Current Weight</Text>
+              <Text fontSize='4xl' textAlign='center' color='#FFFFFF'>73.5 kg</Text>
+            </Flex>
+            <Spacer/>
+            <Flex flexDirection='column'>
+              <Text color='#8A8B96'>Target Weight</Text>
+              <Text fontSize='xl' textAlign='center' color='#8A8B96'>78.5 kg</Text>
+            </Flex>
+          </Flex>
+          {/* Progression Bar */}
+          <Box>
+            <Box mt={16} px={8}>
+                <Progress bg='#8A8B96' colorScheme="green" value={calculateWeightProgressPercentage(72.5, 78.5, 74.5)} />
+            </Box>
+            <Box mt={4}>
+              <Text fontSize='xl' textAlign='center' color='#FFFFFF'>{calculateWeightProgressPercentage(72.5, 78.5, 74.5)}%</Text>
+            </Box>
+          </Box>
+          
         </Box>
-
-        <Title title="BMI Calculator"></Title>
-        <Text>Your Current BMI: 23.14</Text>
-        <Text>You are healthy</Text>
-
-        <Title title="Weight History"></Title>
-        <FullWeightHistoryPage></FullWeightHistoryPage>
-        <WeightEntryComponent></WeightEntryComponent>
-        <WeightEntryComponent></WeightEntryComponent>
-        <WeightEntryComponent></WeightEntryComponent>
-        <NewWeightEntryPage></NewWeightEntryPage>
-        <SetNewTargetWeightPage></SetNewTargetWeightPage>
-    </Box>
+      </Box>
+      <Box p={4}>
+        <Box>
+          <Title title="BMI Calculator"></Title>
+          <Text>Your Current BMI: 23.14</Text>
+          <Text>You are healthy</Text>
+        </Box>
+        <Box>
+          <Title title="Weight History"></Title>
+          <FullWeightHistoryPage></FullWeightHistoryPage>
+          <WeightEntryComponent></WeightEntryComponent>
+          <WeightEntryComponent></WeightEntryComponent>
+          <WeightEntryComponent></WeightEntryComponent>
+          <NewWeightEntryPage></NewWeightEntryPage>
+          <SetNewTargetWeightPage></SetNewTargetWeightPage>
+        </Box>
+      </Box>
+    </Flex>
     
   )
 }
