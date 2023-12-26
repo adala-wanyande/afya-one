@@ -5,7 +5,6 @@ import {
   Button,
   Drawer,
   DrawerBody,
-  DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
   DrawerContent,
@@ -17,12 +16,12 @@ const FullWeightHistoryPage = () => {
   
     return (
       <>
-        <Button onClick={onOpen}>See All</Button>
-        <Drawer placement='bottom' isOpen={isOpen} onClose={onClose} size='full'>
+        <Button bg="#1AFFD5" onClick={onOpen}>See All</Button>
+        <Drawer bg="#16172E" placement='bottom' isOpen={isOpen} onClose={onClose} size='xl'>
           <DrawerOverlay />
-          <DrawerContent>
-            <DrawerCloseButton />
-            <DrawerHeader>Full Weight History</DrawerHeader>
+          <DrawerContent bg="#16172E">
+            <DrawerCloseButton color="#FFFFFF"/>
+            <DrawerHeader color='#FFFFFF' textAlign="center">Full Weight History</DrawerHeader>
             <DrawerBody>
                 <WeightEntryComponent></WeightEntryComponent>
                 <WeightEntryComponent></WeightEntryComponent>
@@ -38,10 +37,6 @@ const FullWeightHistoryPage = () => {
                 <WeightEntryComponent></WeightEntryComponent>
                 <WeightEntryComponent></WeightEntryComponent>
             </DrawerBody>
-  
-            <DrawerFooter>
-              
-            </DrawerFooter>
           </DrawerContent>
         </Drawer>
       </>

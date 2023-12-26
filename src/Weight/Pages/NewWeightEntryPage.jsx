@@ -6,11 +6,11 @@ import {
   Button,
   Drawer,
   DrawerBody,
-  DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
+  Flex
 } from '@chakra-ui/react'
 import { AddIcon } from '@chakra-ui/icons'
 
@@ -19,13 +19,13 @@ const NewWeightEntryPage = () => {
 
   return (
     <>
-      <Button onClick={onOpen} rightIcon={<AddIcon />}>Add New Weight</Button>
-      <Drawer placement='bottom' isOpen={isOpen} onClose={onClose} size='full'>
+      <Button bg='#1AFFD5' onClick={onOpen} rightIcon={<AddIcon />}>Add New Weight</Button>
+      <Drawer bg="#16172E" placement='bottom' isOpen={isOpen} onClose={onClose} size='xl'>
         <DrawerOverlay />
-        <DrawerContent>
-          <DrawerCloseButton />
-          <DrawerHeader>New Weight Entry</DrawerHeader>
-          <DrawerBody>
+        <DrawerContent bg="#16172E">
+          <DrawerCloseButton color="#FFFFFF"/>
+          <DrawerHeader color="#FFFFFF" textAlign="center">New Weight Entry</DrawerHeader>
+          <DrawerBody color='#FFFFFF'>
             <form
               id='my-form'
               onSubmit={(e) => {
@@ -38,11 +38,11 @@ const NewWeightEntryPage = () => {
             </form>
           </DrawerBody>
 
-          <DrawerFooter>
-            <Button type='submit' form='my-form'>
+          <Flex m={8} justifyContent='center'>
+            <Button bg='#1AFFD5' type='submit' form='my-form'>
               Save
             </Button>
-          </DrawerFooter>
+          </Flex>
         </DrawerContent>
       </Drawer>
     </>
