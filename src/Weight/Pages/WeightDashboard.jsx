@@ -1,13 +1,45 @@
-import React from 'react'
-import NewWeightEntryPage from './NewWeightEntryPage';
-import SetNewTargetWeightPage from './SetNewTargetWeightPage';
-import WeightEntryComponent from '../Components/WeightEntryComponent';
+import React, { useState, useEffect } from 'react';
+import { Flex, Box, Text, Progress, Avatar, WrapItem, Spacer, Select } from '@chakra-ui/react';
 import LineChart from '../Components/LineChart';
 import FullWeightHistoryPage from './FullWeightHistoryPage';
 import Title from '../Components/Title';
-import { Box, Text, Progress, Avatar, WrapItem, Flex, Spacer, Select } from '@chakra-ui/react';
+import WeightEntryComponent from '../Components/WeightEntryComponent';
+import NewWeightEntryPage from './NewWeightEntryPage';
+import SetNewTargetWeightPage from './SetNewTargetWeightPage';
 
 const WeightDashboard = () => {
+  const [top3WeightEntries, setTop3WeightEntries] = useState([]);
+
+  useEffect(() => {
+    fetchTop3WeightEntries();
+  }, []);
+
+  const calculateWeightDifference = (index) => {
+    if (index === top3WeightEntries.length - 1) {
+      return 0; // No next entry for the last one
+    }
+
+    return top3WeightEntries[index].weight - top3WeightEntries[index + 1].weight;
+  };
+
+  const fetchTop3WeightEntries = async () => {
+    try {
+      const response = await fetch('http://localhost:4000/api/weights');
+      if (response.ok) {
+        const data = await response.json();
+        // Sort data in descending order based on the date
+        const sortedData = data.sort((a, b) => new Date(b.date) - new Date(a.date));
+        // Take the top 3 entries
+        const top3Data = sortedData.slice(0, 3);
+        setTop3WeightEntries(top3Data);
+      } else {
+        console.error('Failed to fetch weight data');
+      }
+    } catch (error) {
+      console.error('Error during data fetching:', error);
+    }
+  };
+
   function calculateWeightProgressPercentage(startingWeight, targetWeight, currentWeight) {
     // Ensure starting weight is not greater than target weight
     if (startingWeight > targetWeight) {
@@ -26,14 +58,14 @@ const WeightDashboard = () => {
     // Return the percentage, rounded to two decimal places
     return Math.round(progressPercentage * 100) / 100;
   }
-  
+
   return (
     <Flex bg="#16172E" h="$100vh">
       <Box w="50%" p={4} px={8}>
         <Box>
           <Flex p={8} alignItems="center">
             <WrapItem>
-              <Avatar size='md' name='Christian Nwamba' src='https://bit.ly/code-beast' />{' '}
+              <Avatar size='md' name='Christian Nwamba' src='https://bit.ly/code-beast' />
             </WrapItem>
             <Spacer />
             <Select
@@ -53,7 +85,7 @@ const WeightDashboard = () => {
           </Flex>
         </Box> 
         <Box>
-          <LineChart></LineChart>
+          <LineChart />
         </Box>
         <Box mt={16} px={8}>
           <Flex>
@@ -94,21 +126,25 @@ const WeightDashboard = () => {
           <Flex alignItems='center' justifyContent='center' p={4}>
             <Title title="Weight History"></Title>
             <Spacer/>
-            <FullWeightHistoryPage></FullWeightHistoryPage>
+            <FullWeightHistoryPage />
           </Flex>
-          <WeightEntryComponent></WeightEntryComponent>
-          <WeightEntryComponent></WeightEntryComponent>
-          <WeightEntryComponent></WeightEntryComponent>
+          {top3WeightEntries.map((entry, index) => (
+            <WeightEntryComponent
+              key={entry._id}
+              date={entry.date}
+              weight={entry.weight}
+              weightDifference={calculateWeightDifference(index)}
+            />
+          ))}
           <Flex mt={8} px={32}>
-            <NewWeightEntryPage></NewWeightEntryPage>
+            <NewWeightEntryPage />
             <Spacer/>
-            <SetNewTargetWeightPage></SetNewTargetWeightPage>
+            <SetNewTargetWeightPage />
           </Flex>
         </Box>
       </Box>
     </Flex>
-    
-  )
+  );
 }
 
-export default WeightDashboard
+export default WeightDashboard;
