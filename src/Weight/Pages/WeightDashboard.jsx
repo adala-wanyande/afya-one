@@ -8,6 +8,29 @@ import NewWeightEntryPage from './NewWeightEntryPage';
 import SetNewTargetWeightPage from './SetNewTargetWeightPage';
 
 const WeightDashboard = () => {
+  const [allWeightEntries, setAllWeightEntries] = useState([]);
+  const [selectedTimeRange, setSelectedTimeRange] = useState('all');
+
+  useEffect(() => {
+    fetchAllWeightEntries();
+  }, []);
+
+  const fetchAllWeightEntries = async () => {
+    try {
+      const response = await fetch('http://localhost:4000/api/weights');
+      if (response.ok) {
+        const data = await response.json();
+        // Sort data in descending order based on the date
+        const sortedData = data.sort((a, b) => new Date(b.date) - new Date(a.date));
+        setAllWeightEntries(sortedData);
+      } else {
+        console.error('Failed to fetch weight data');
+      }
+    } catch (error) {
+      console.error('Error during data fetching:', error);
+    }
+  };
+  
   const [top3WeightEntries, setTop3WeightEntries] = useState([]);
 
   useEffect(() => {
@@ -20,6 +43,10 @@ const WeightDashboard = () => {
     }
 
     return top3WeightEntries[index].weight - top3WeightEntries[index + 1].weight;
+  };
+
+  const handleTimeRangeChange = (event) => {
+    setSelectedTimeRange(event.target.value);
   };
 
   const fetchTop3WeightEntries = async () => {
@@ -75,17 +102,19 @@ const WeightDashboard = () => {
               width={180}
               minWidth={100}
               alignItems="center"
+              onChange={handleTimeRangeChange}
+              value={selectedTimeRange}
             >
-              <option>All records</option>
-              <option>Past 6 months</option>
-              <option>Past 3 months</option>
-              <option>Past month</option>
-              <option>Past week</option>
+              <option value="all">All records</option>
+              <option value="6months">Past 6 months</option>
+              <option value="3months">Past 3 months</option>
+              <option value="1month">Past month</option>
+              <option value="1week">Past week</option>
             </Select>
           </Flex>
         </Box> 
         <Box>
-          <LineChart />
+          <LineChart weightData={allWeightEntries} selectedTimeRange={selectedTimeRange} />
         </Box>
         <Box mt={16} px={8}>
           <Flex>
