@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Flex, Box, Text, Progress, Avatar, WrapItem, Spacer, Select } from '@chakra-ui/react';
+import { Flex, Box, Text, Avatar, WrapItem, Spacer } from '@chakra-ui/react';
 import LineChart from '../Components/LineChart';
 import FullWeightHistoryPage from './FullWeightHistoryPage';
 import Title from '../Components/Title';
@@ -9,15 +9,53 @@ import SetNewTargetWeightPage from './SetNewTargetWeightPage';
 import WidgetPlaceholder from '../Components/WidgetPlaceholder';
 import ProgressBar from '../Components/ProgressBar';
 import LoadingSpinner from '../Components/LoadingSpinner';
+import MediumLoadingSpinner from '../Components/MediumLoadingSpinner';
 
 const WeightDashboard = () => {
   const [allWeightEntries, setAllWeightEntries] = useState([]);
   const [selectedTimeRange, setSelectedTimeRange] = useState('all');
   const [isLoading, setIsLoading] = useState(true); // New state to track loading status
+  const [height] = useState(170); // Set a default height value
+  const [startingWeight] = useState(70)
+  const [targetWeight, setTargetWeight] = useState(null);
 
   useEffect(() => {
     fetchAllWeightEntries();
+    fetchTargetWeight();
   }, []);
+
+  const fetchTargetWeight = async () => {
+    try {
+      const response = await fetch('http://localhost:4000/api/targets');
+      if (response.ok) {
+        const data = await response.json();
+        // Sort data in descending order based on the createdAt date
+        const sortedData = data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        // Take the most recent target weight
+        const latestTargetWeight = sortedData[0]?.target;
+        setTargetWeight(latestTargetWeight);
+      } else {
+        console.error('Failed to fetch target weight data');
+      }
+    } catch (error) {
+      console.error('Error during target weight fetching:', error);
+    }
+  };
+
+  const calculateBMI = (weight, height) => {
+    if (!weight || !height) {
+      return 'N/A';
+    }
+
+    // Convert height from centimeters to meters
+    const heightInMeters = height / 100;
+
+    // Calculate BMI using the formula: BMI = weight (kg) / (height (m))^2
+    const bmi = weight / Math.pow(heightInMeters, 2);
+
+    // Round BMI to two decimal places
+    return bmi.toFixed(2);
+  };
 
   const fetchAllWeightEntries = async () => {
     try {
@@ -55,6 +93,26 @@ const WeightDashboard = () => {
     setSelectedTimeRange(event.target.value);
   };
 
+  const getBMIColorAndMessage = (bmi) => {
+    let color, message;
+  
+    if (bmi < 18.5) {
+      color = '#f26c6d'; // Red color for Underweight
+      message = 'Underweight';
+    } else if (bmi >= 18.5 && bmi <= 24.9) {
+      color = '#42be65'; // Green color for Healthy Weight
+      message = 'Healthy Weight';
+    } else if (bmi >= 25.0 && bmi <= 29.9) {
+      color = '#f5a623'; // Yellow color for Overweight
+      message = 'Overweight';
+    } else {
+      color = '#f26c6d'; // Red color for Obesity
+      message = 'Obesity';
+    }
+  
+    return { color, message };
+  };
+
   const fetchTop3WeightEntries = async () => {
     try {
       const response = await fetch('http://localhost:4000/api/weights');
@@ -75,9 +133,9 @@ const WeightDashboard = () => {
 
   function calculateWeightProgressPercentage(startingWeight, targetWeight, currentWeight) {
     // Ensure starting weight is not greater than target weight
-    if (startingWeight > targetWeight) {
-      throw new Error("Starting weight cannot be greater than target weight.");
-    }
+    // if (startingWeight > targetWeight) {
+    //   throw new Error("Starting weight cannot be greater than target weight.");
+    // }
   
     // Calculate total weight loss needed
     const totalWeightToLose = startingWeight - targetWeight;
@@ -127,33 +185,54 @@ const WeightDashboard = () => {
           <Flex>
             <Flex direction='column'>
               <Text color='#8A8B96'>Starting Weight</Text>
-              <Text fontSize='xl' textAlign='center' color='#8A8B96'>72.5 kg</Text>
+              {isLoading && <MediumLoadingSpinner />}
+              {/* Display the progress bar if targetWeight is available */}
+              {!isLoading && targetWeight !== null && (
+              <Text fontSize='xl' textAlign='center' color='#8A8B96'>{startingWeight} kg</Text>
+              )}
             </Flex>
             <Spacer/>
             <Flex flexDirection='column'>
               <Text color='#FFFFFF'>Current Weight</Text>
-              <Text as='b' fontSize='4xl' textAlign='center' color='#FFFFFF'>73.5 kg</Text>
+              {isLoading && <MediumLoadingSpinner />}
+              {/* Display the progress bar if targetWeight is available */}
+              {!isLoading && targetWeight !== null && (
+              <Text as='b' fontSize='4xl' textAlign='center' color='#FFFFFF'>{allWeightEntries[0]?.weight} kg</Text>
+              )}
             </Flex>
             <Spacer/>
             <Flex flexDirection='column'>
               <Text color='#8A8B96'>Target Weight</Text>
-              <Text fontSize='xl' textAlign='center' color='#8A8B96'>78.5 kg</Text>
+              {isLoading && <MediumLoadingSpinner />}
+              {/* Display the progress bar if targetWeight is available */}
+              {!isLoading && targetWeight !== null && (
+              <Text fontSize='xl' textAlign='center' color='#8A8B96'>{targetWeight} kg</Text>
+              )}
             </Flex>
           </Flex>
           {/* Progression Bar */}
-          <Box>
-            <Box mt={8} px={8}>
-                <ProgressBar progress={calculateWeightProgressPercentage(72.5, 78.5, 74.5)}></ProgressBar>
-            </Box>
+          <Box mt={8}>
+            {/* Display the loading spinner while target weight is being fetched */}
+              <ProgressBar progress={calculateWeightProgressPercentage(startingWeight, targetWeight, allWeightEntries[0]?.weight)} />
           </Box>
-          
         </Box>
       </Box>
       <Box p={4} w='50%'>
         <Flex direction='column' justifyContent='center'>
-          <Title title="BMI Calculator"></Title>
-          <Text pl={16} fontSize='md' color='#8A8B96'>Your Current BMI: <Text as='b' fontSize='lg' color='#f26c6d'>23.14</Text></Text>
-          <Text pl={16} fontSize='md' color='#8A8B96'>You are healthy!</Text>
+        <Title title="BMI Calculator"></Title>
+            {/* Display the loading spinner while BMI is being calculated */}
+          {isLoading && <MediumLoadingSpinner />}
+          {/* Display the BMI calculation if weightData is not empty and BMI is available */}
+          {!isLoading && allWeightEntries.length > 0 && (
+              <Text pl={16} fontSize='md' color={getBMIColorAndMessage(calculateBMI(allWeightEntries[0]?.weight, height)).color}>
+                Your Current BMI:{' '}
+                <Text as='b' fontSize='lg' color={getBMIColorAndMessage(calculateBMI(allWeightEntries[0]?.weight, height)).color}>
+                  {calculateBMI(allWeightEntries[0]?.weight, height)}
+                </Text>
+                {' - '}
+                {getBMIColorAndMessage(calculateBMI(allWeightEntries[0]?.weight, height)).message}
+              </Text>
+          )}
         </Flex>
         <Box>
           <Flex alignItems='center' justifyContent='center' p={2}>
