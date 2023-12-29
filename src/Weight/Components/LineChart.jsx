@@ -1,10 +1,9 @@
-// LineChart.js
 import React from 'react';
 import { Line } from 'react-chartjs-2';
-import { Chart as ChartJS, LineElement, CategoryScale, LinearScale, PointElement } from 'chart.js';
-import { format, isValid, addMonths, addWeeks, addDays } from 'date-fns';
+import { Chart as ChartJS, LineElement, CategoryScale, LinearScale, PointElement, Tooltip } from 'chart.js';
+import { format, isValid, addMonths, addWeeks } from 'date-fns';
 
-ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement);
+ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip);
 
 const LineChart = ({ weightData, selectedTimeRange }) => {
   const validWeightData = weightData.filter(entry => isValid(new Date(entry.date)));
@@ -34,9 +33,9 @@ const LineChart = ({ weightData, selectedTimeRange }) => {
     datasets: [
       {
         data: filteredWeightData.map(entry => entry.weight).reverse(),
-        backgroundColor: 'transparent',
+        backgroundColor: 'rgba(242, 108, 109, 0.2)', // Background color for the chart area
         borderColor: '#f26c6d',
-        pointRadius: 3,
+        pointRadius: 5, // Increase circle size for better visibility
         pointBackgroundColor: '#f26c6d',
         pointBorderColor: 'transparent',
         tension: 0.5,
@@ -47,20 +46,27 @@ const LineChart = ({ weightData, selectedTimeRange }) => {
   const options = {
     plugins: {
       legend: false,
+      tooltip: {
+        enabled: true,
+        mode: 'nearest',
+        intersect: false,
+      },
     },
     scales: {
       x: {
         grid: {
-          display: false,
+          color: 'rgba(255, 255, 255, 0.1)', // Color of the x-axis grid lines
+          display: true,
         },
       },
       y: {
+        grid: {
+          color: 'rgba(255, 255, 255, 0.1)', // Color of the y-axis grid lines
+          display: true,
+        },
         ticks: {
           stepSize: 0.5,
           callback: (value) => value + ' kg',
-        },
-        grid: {
-          display: false,
         },
       },
     },

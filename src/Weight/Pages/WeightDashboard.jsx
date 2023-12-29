@@ -6,10 +6,14 @@ import Title from '../Components/Title';
 import WeightEntryComponent from '../Components/WeightEntryComponent';
 import NewWeightEntryPage from './NewWeightEntryPage';
 import SetNewTargetWeightPage from './SetNewTargetWeightPage';
+import WidgetPlaceholder from '../Components/WidgetPlaceholder';
+import ProgressBar from '../Components/ProgressBar';
+import LoadingSpinner from '../Components/LoadingSpinner';
 
 const WeightDashboard = () => {
   const [allWeightEntries, setAllWeightEntries] = useState([]);
   const [selectedTimeRange, setSelectedTimeRange] = useState('all');
+  const [isLoading, setIsLoading] = useState(true); // New state to track loading status
 
   useEffect(() => {
     fetchAllWeightEntries();
@@ -20,7 +24,6 @@ const WeightDashboard = () => {
       const response = await fetch('http://localhost:4000/api/weights');
       if (response.ok) {
         const data = await response.json();
-        // Sort data in descending order based on the date
         const sortedData = data.sort((a, b) => new Date(b.date) - new Date(a.date));
         setAllWeightEntries(sortedData);
       } else {
@@ -28,6 +31,9 @@ const WeightDashboard = () => {
       }
     } catch (error) {
       console.error('Error during data fetching:', error);
+    } finally {
+      // Set loading status to false once data is fetched (success or error)
+      setIsLoading(false);
     }
   };
   
@@ -94,27 +100,28 @@ const WeightDashboard = () => {
             <WrapItem>
               <Avatar size='md' name='Christian Nwamba' src='https://bit.ly/code-beast' />
             </WrapItem>
-            <Spacer />
-            <Select
-              bg='#16172E'
-              borderColor='#f26c6d'
-              color='#f26c6d'
-              width={180}
-              minWidth={100}
+            <Spacer/>
+            <label for="underline_select" class="sr-only">Underline select</label>
+            <select 
               alignItems="center"
               onChange={handleTimeRangeChange}
               value={selectedTimeRange}
-            >
-              <option value="all">All records</option>
-              <option value="6months">Past 6 months</option>
-              <option value="3months">Past 3 months</option>
-              <option value="1month">Past month</option>
-              <option value="1week">Past week</option>
-            </Select>
+              class="border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[180px] p-2.5 bg-[#16172E] border-[#f26c6d] placeholder-gray-400 text-[#f26c6d] focus:ring-blue-500 focus:border-blue-500">
+                <option value="all">All records</option>
+                <option value="6months">Past 6 months</option>
+                <option value="3months">Past 3 months</option>
+                <option value="1month">Past month</option>
+                <option value="1week">Past week</option>
+            </select>
           </Flex>
         </Box> 
         <Box>
-          <LineChart weightData={allWeightEntries} selectedTimeRange={selectedTimeRange} />
+            {/* Display the loading placeholder if weightData is empty */}
+            {allWeightEntries.length === 0 && <WidgetPlaceholder />}
+            {/* Display the LineChart if weightData is not empty */}
+            {allWeightEntries.length > 0 && (
+              <LineChart weightData={allWeightEntries} selectedTimeRange={selectedTimeRange} />
+            )}
         </Box>
         <Box mt={16} px={8}>
           <Flex>
@@ -136,10 +143,7 @@ const WeightDashboard = () => {
           {/* Progression Bar */}
           <Box>
             <Box mt={8} px={8}>
-                <Progress height='4px' bg='#8A8B96' colorScheme="green" value={calculateWeightProgressPercentage(72.5, 78.5, 74.5)} />
-            </Box>
-            <Box mt={4}>
-              <Text fontSize='xl' textAlign='center' color='#f26c6d'>{calculateWeightProgressPercentage(72.5, 78.5, 74.5)}%</Text>
+                <ProgressBar progress={calculateWeightProgressPercentage(72.5, 78.5, 74.5)}></ProgressBar>
             </Box>
           </Box>
           
@@ -152,12 +156,20 @@ const WeightDashboard = () => {
           <Text pl={16} fontSize='md' color='#8A8B96'>You are healthy!</Text>
         </Flex>
         <Box>
-          <Flex alignItems='center' justifyContent='center' p={4}>
+          <Flex alignItems='center' justifyContent='center' p={2}>
             <Title title="Weight History"></Title>
             <Spacer/>
             <FullWeightHistoryPage />
           </Flex>
-          {top3WeightEntries.map((entry, index) => (
+
+          {/* Display the loading placeholder if weightData is empty */}
+          {top3WeightEntries.length === 0 && 
+            <Flex justify='center'>
+              <LoadingSpinner />
+            </Flex> 
+            }
+            {/* Display the LineChart if weightData is not empty */}
+            {top3WeightEntries.map((entry, index) => (
             <WeightEntryComponent
               key={entry._id}
               date={entry.date}
@@ -165,6 +177,7 @@ const WeightDashboard = () => {
               weightDifference={calculateWeightDifference(index)}
             />
           ))}
+
           <Flex mt={8} px={32}>
             <NewWeightEntryPage />
             <Spacer/>
