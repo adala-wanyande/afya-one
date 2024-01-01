@@ -53,7 +53,7 @@ const NewWeightEntryPage = () => {
 
   return (
     <>
-      <Button bg='#1AFFD5' onClick={onOpen} rightIcon={<AddIcon />}>
+      <Button bg='#1AFFD5' m={4} onClick={onOpen} rightIcon={<AddIcon />}>
         Add New Weight
       </Button>
       <Drawer bg='#16172E' placement='bottom' isOpen={isOpen} onClose={onClose} size='xl'>

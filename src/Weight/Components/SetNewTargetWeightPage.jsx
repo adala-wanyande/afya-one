@@ -51,7 +51,7 @@ const SetNewTargetWeightPage = () => {
 
   return (
     <>
-      <Button bg='#1AFFD5' onClick={onOpen} rightIcon={<AddIcon />}>
+      <Button m={4} bg='#1AFFD5' onClick={onOpen} rightIcon={<AddIcon />}>
         Set New Target Weight
       </Button>
       <Drawer placement='bottom' isOpen={isOpen} onClose={onClose} size='xl'>

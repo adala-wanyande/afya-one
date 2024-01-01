@@ -9,7 +9,7 @@ import {
   DrawerContent,
   DrawerCloseButton,
 } from '@chakra-ui/react';
-import WeightEntryComponent from '../Components/WeightEntryComponent';
+import WeightEntryComponent from './WeightEntryComponent';
 
 const FullWeightHistoryPage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -45,7 +45,7 @@ const FullWeightHistoryPage = () => {
   };
 
   return (
-    <>
+    <div className='m-4'>
       <Button bg='#1AFFD5' onClick={onOpen}>
         See All
       </Button>
@@ -77,7 +77,7 @@ const FullWeightHistoryPage = () => {
           </DrawerBody>
         </DrawerContent>
       </Drawer>
-    </>
+    </div>
   );
 };
 

@@ -151,110 +151,139 @@ const WeightDashboard = () => {
   }
 
   return (
-    <div className='bg-[#16172E] flex flex-col lg:flex-row w-full'>
-      <div className='flex flex-col w-full lg:w-1/2 lg:h-screen'>
-        <div className='flex m-4 justify-between'>
-          {/* User Icon and filter*/}
-          <div>
-            {/* User Icon */}
-            <Avatar size='md' name='Adala Wanyande' src='https://bit.ly/code-beast' />
-          </div>
-          <div>
-            {/* Filter */}
-            <label for="underline_select" class="sr-only">Underline select</label>
-            <select 
-              alignItems="center"
-              onChange={handleTimeRangeChange}
-              value={selectedTimeRange}
-              class="border rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 bg-[#16172E] border-[#f26c6d] placeholder-gray-400 text-[#f26c6d] focus:ring-blue-500 focus:border-blue-500">
-                <option value="all"><Text>All records</Text></option>
-                <option value="6months"><Text>Past 6 months</Text></option>
-                <option value="3months"><Text>Past 3 months</Text></option>
-                <option value="1month"><Text>Past month</Text></option>
-                <option value="1week"><Text>Past week</Text></option>
-            </select>
-          </div>
+    <div className='bg-[#16172E] flex sm:flex-col w-full'>
+      <div>
+        <div>
+          {/* Graph or Widget Placeholder */}
         </div>
-        <div className="m-4 flex justify-center">
-          {/* Display the loading placeholder if weightData is empty */}
-          {allWeightEntries.length === 0 && <WidgetPlaceholder />}
-          {/* Display the LineChart if weightData is not empty */}
-          {allWeightEntries.length > 0 && (
-            <LineChart weightData={allWeightEntries} selectedTimeRange={selectedTimeRange} />
-          )}
+      </div>
+      <div>
+        {/* Weight Display or Loading Spinner */}
+        <div>
+          {/* Starting Weight */}
         </div>
-        <div className='m-4 flex justify-between'>
-          {/* Weight Display or Loading Spinner */}
-          <div className='p-4'>
-            {/* Starting Weight */}
-            <Flex direction='column'>
-              <Text textAlign='center' color='#8A8B96'>Starting Weight</Text>
-              <div className='flex justify-center'>
+        <div>
+          {/* Current Weight */}
+        </div>
+        <div>
+          {/* Target Weight */}
+        </div>
+      </div>
+      <div>
+        {/* Weight Progress Bar */}
+      </div>
+      <div>
+        {/* BMI Calculator or Loading Spinner */}
+        <div>
+          {/* Title */}
+        </div>
+        <div>
+          {/* BMI Content */}
+        </div>
+      </div>
+      <div>
+        {/* Weight History or Loading Spinner */}
+        <div>
+          {/* Title */}
+        </div>
+        <div>
+          {/* Top 3 Recent Weight Entries */}
+        </div>
+      </div>
+      <div>
+        {/* Buttons */}
+        <div>
+          {/* New Weight Button */}
+        </div>
+        <div>
+          {/* Set New Target Button */}
+        </div>
+      </div>
+        <Box w="50%" p={4} px={8}>
+          <Box>
+            <Flex p={8} alignItems="center">
+              <WrapItem>
+                <Avatar size='md' name='Christian Nwamba' src='https://bit.ly/code-beast' />
+              </WrapItem>
+              <Spacer/>
+              <label for="underline_select" class="sr-only">Underline select</label>
+              <select 
+                alignItems="center"
+                onChange={handleTimeRangeChange}
+                value={selectedTimeRange}
+                class="border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[180px] p-2.5 bg-[#16172E] border-[#f26c6d] placeholder-gray-400 text-[#f26c6d] focus:ring-blue-500 focus:border-blue-500">
+                  <option value="all">All records</option>
+                  <option value="6months">Past 6 months</option>
+                  <option value="3months">Past 3 months</option>
+                  <option value="1month">Past month</option>
+                  <option value="1week">Past week</option>
+              </select>
+            </Flex>
+          </Box> 
+          <Box>
+              {/* Display the loading placeholder if weightData is empty */}
+              {allWeightEntries.length === 0 && <WidgetPlaceholder />}
+              {/* Display the LineChart if weightData is not empty */}
+              {allWeightEntries.length > 0 && (
+                <LineChart weightData={allWeightEntries} selectedTimeRange={selectedTimeRange} />
+              )}
+          </Box>
+          <Box mt={16} px={8}>
+            <Flex>
+              <Flex direction='column'>
+                <Text color='#8A8B96'>Starting Weight</Text>
                 {isLoading && <MediumLoadingSpinner />}
                 {/* Display the progress bar if targetWeight is available */}
                 {!isLoading && targetWeight !== null && (
                 <Text fontSize='xl' textAlign='center' color='#8A8B96'>{startingWeight} kg</Text>
                 )}
-              </div>
-            </Flex>
-          </div>
-          <div className='p-4'>
-            {/* Current Weight */}
-            <Flex flexDirection='column'>
-              <Text textAlign='center' color='#FFFFFF'>Current Weight</Text>
-              <div className='flex justify-center'>
+              </Flex>
+              <Spacer/>
+              <Flex flexDirection='column'>
+                <Text color='#FFFFFF'>Current Weight</Text>
                 {isLoading && <MediumLoadingSpinner />}
                 {/* Display the progress bar if targetWeight is available */}
                 {!isLoading && targetWeight !== null && (
                 <Text as='b' fontSize='4xl' textAlign='center' color='#FFFFFF'>{allWeightEntries[0]?.weight} kg</Text>
                 )}
-              </div>         
-            </Flex>
-          </div>
-          <div className='p-4'>
-            {/* Target Weight */}
-            <Flex flexDirection='column'>
-                <Text textAlign='center' color='#8A8B96'>Target Weight</Text>
-                <div className='flex justify-center'>
-                  {isLoading && <MediumLoadingSpinner />}
-                  {/* Display the progress bar if targetWeight is available */}
-                  {!isLoading && targetWeight !== null && (
-                  <Text fontSize='xl' textAlign='center' color='#8A8B96'>{targetWeight} kg</Text>
-                  )}
-                </div>  
               </Flex>
-          </div>
-        </div>
-        <div className='m-4'>
-          <ProgressBar progress={calculateWeightProgressPercentage(startingWeight, targetWeight, allWeightEntries[0]?.weight)} />
-        </div>
-      </div>
-      <div className='flex flex-col w-full lg:w-1/2 lg:h-screen'>
-        <div>
-          {/* BMI Calculator or Loading Spinner */}
-          <div>
-            {/* Title */}
-            <Title m={4} title="BMI Calculator"></Title>
-          </div>
-          <div className='flex justify-center'>
-          {/* Display the loading spinner while BMI is being calculated */}
-          {isLoading && <MediumLoadingSpinner />}
-          {/* Display the BMI calculation if weightData is not empty and BMI is available */}
-          {!isLoading && allWeightEntries.length > 0 && (
-            <Text pl={16} fontSize='md' color={getBMIColorAndMessage(calculateBMI(allWeightEntries[0]?.weight, height)).color}>
-              Your Current BMI:{' '}
-              <Text as='b' fontSize='lg' color={getBMIColorAndMessage(calculateBMI(allWeightEntries[0]?.weight, height)).color}>
-                {calculateBMI(allWeightEntries[0]?.weight, height)}
-              </Text>
-              {' - '}
-              {getBMIColorAndMessage(calculateBMI(allWeightEntries[0]?.weight, height)).message}
-            </Text>
-          )}
-          </div>
-        </div>
-        <Box>
-            <Flex alignItems='center' justifyContent='center'>
-              <Title m={4} title="Weight History"></Title>
+              <Spacer/>
+              <Flex flexDirection='column'>
+                <Text color='#8A8B96'>Target Weight</Text>
+                {isLoading && <MediumLoadingSpinner />}
+                {/* Display the progress bar if targetWeight is available */}
+                {!isLoading && targetWeight !== null && (
+                <Text fontSize='xl' textAlign='center' color='#8A8B96'>{targetWeight} kg</Text>
+                )}
+              </Flex>
+            </Flex>
+            {/* Progression Bar */}
+            <Box mt={8}>
+              {/* Display the loading spinner while target weight is being fetched */}
+                <ProgressBar progress={calculateWeightProgressPercentage(startingWeight, targetWeight, allWeightEntries[0]?.weight)} />
+            </Box>
+          </Box>
+        </Box>
+        <Box p={4} w='50%'>
+          <Flex direction='column' justifyContent='center'>
+          <Title title="BMI Calculator"></Title>
+              {/* Display the loading spinner while BMI is being calculated */}
+            {isLoading && <MediumLoadingSpinner />}
+            {/* Display the BMI calculation if weightData is not empty and BMI is available */}
+            {!isLoading && allWeightEntries.length > 0 && (
+                <Text pl={16} fontSize='md' color={getBMIColorAndMessage(calculateBMI(allWeightEntries[0]?.weight, height)).color}>
+                  Your Current BMI:{' '}
+                  <Text as='b' fontSize='lg' color={getBMIColorAndMessage(calculateBMI(allWeightEntries[0]?.weight, height)).color}>
+                    {calculateBMI(allWeightEntries[0]?.weight, height)}
+                  </Text>
+                  {' - '}
+                  {getBMIColorAndMessage(calculateBMI(allWeightEntries[0]?.weight, height)).message}
+                </Text>
+            )}
+          </Flex>
+          <Box>
+            <Flex alignItems='center' justifyContent='center' p={2}>
+              <Title title="Weight History"></Title>
               <Spacer/>
               <FullWeightHistoryPage />
             </Flex>
@@ -275,13 +304,14 @@ const WeightDashboard = () => {
               />
             ))}
 
-            <div className='flex flex-col lg:flex-row justify-center m-4'>
+            <Flex mt={8} px={32}>
               <NewWeightEntryPage />
+              <Spacer/>
               <SetNewTargetWeightPage />
-            </div>
+            </Flex>
           </Box>
-      </div>
-      </div>
+        </Box>
+    </div>
   );
 }
 
