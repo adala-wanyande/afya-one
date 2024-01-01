@@ -10,6 +10,7 @@ import {
   DrawerCloseButton,
 } from '@chakra-ui/react';
 import WeightEntryComponent from './WeightEntryComponent';
+import MediumLoadingSpinner from './MediumLoadingSpinner';
 
 const FullWeightHistoryPage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -66,14 +67,20 @@ const FullWeightHistoryPage = () => {
             Full Weight History
           </DrawerHeader>
           <DrawerBody>
-            {weightData.map((entry, index) => (
-              <WeightEntryComponent
-                key={entry._id}
-                date={entry.date}
-                weight={entry.weight}
-                weightDifference={calculateWeightDifference(index)}
-              />
-            ))}
+          {weightData.length === 0 ? (
+            <div className='flex justify-center'>
+              <MediumLoadingSpinner />
+            </div>
+            ) : (
+              weightData.map((entry, index) => (
+                <WeightEntryComponent
+                  key={entry._id}
+                  date={entry.date}
+                  weight={entry.weight}
+                  weightDifference={calculateWeightDifference(index)}
+                />
+              ))
+            )}
           </DrawerBody>
         </DrawerContent>
       </Drawer>

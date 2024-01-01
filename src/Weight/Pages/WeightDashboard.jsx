@@ -5,10 +5,9 @@ import FullWeightHistoryPage from '../Components/FullWeightHistory';
 import Title from '../Components/Title';
 import WeightEntryComponent from '../Components/WeightEntryComponent';
 import NewWeightEntryPage from '../Components/NewWeightEntry';
-import SetNewTargetWeightPage from '../Components/SetNewTargetWeightPage';
+import SetNewTargetWeightPage from '../Components/SetNewTargetWeight';
 import WidgetPlaceholder from '../Components/WidgetPlaceholder';
 import ProgressBar from '../Components/ProgressBar';
-import LoadingSpinner from '../Components/LoadingSpinner';
 import MediumLoadingSpinner from '../Components/MediumLoadingSpinner';
 
 const WeightDashboard = () => {
@@ -60,18 +59,18 @@ const WeightDashboard = () => {
   const fetchAllWeightEntries = async () => {
     try {
       const response = await fetch('http://localhost:4000/api/weights');
+      
       if (response.ok) {
         const data = await response.json();
         const sortedData = data.sort((a, b) => new Date(b.date) - new Date(a.date));
         setAllWeightEntries(sortedData);
+        setIsLoading(false); // Set loading status to false only on success
       } else {
         console.error('Failed to fetch weight data');
       }
     } catch (error) {
       console.error('Error during data fetching:', error);
-    } finally {
-      // Set loading status to false once data is fetched (success or error)
-      setIsLoading(false);
+      setIsLoading(false); // Set loading status to false on error
     }
   };
   
@@ -190,7 +189,7 @@ const WeightDashboard = () => {
             <Flex direction='column'>
               <Text textAlign='center' color='#8A8B96'>Starting Weight</Text>
               <div className='flex justify-center'>
-                {isLoading && <MediumLoadingSpinner />}
+                {targetWeight==null && <MediumLoadingSpinner />}
                 {/* Display the progress bar if targetWeight is available */}
                 {!isLoading && targetWeight !== null && (
                 <Text fontSize='xl' textAlign='center' color='#8A8B96'>{startingWeight} kg</Text>
@@ -203,7 +202,7 @@ const WeightDashboard = () => {
             <Flex flexDirection='column'>
               <Text textAlign='center' color='#FFFFFF'>Current Weight</Text>
               <div className='flex justify-center'>
-                {isLoading && <MediumLoadingSpinner />}
+                {targetWeight==null && <MediumLoadingSpinner />}
                 {/* Display the progress bar if targetWeight is available */}
                 {!isLoading && targetWeight !== null && (
                 <Text as='b' fontSize='4xl' textAlign='center' color='#FFFFFF'>{allWeightEntries[0]?.weight} kg</Text>
@@ -216,7 +215,7 @@ const WeightDashboard = () => {
             <Flex flexDirection='column'>
                 <Text textAlign='center' color='#8A8B96'>Target Weight</Text>
                 <div className='flex justify-center'>
-                  {isLoading && <MediumLoadingSpinner />}
+                  {targetWeight==null && <MediumLoadingSpinner />}
                   {/* Display the progress bar if targetWeight is available */}
                   {!isLoading && targetWeight !== null && (
                   <Text fontSize='xl' textAlign='center' color='#8A8B96'>{targetWeight} kg</Text>
@@ -238,7 +237,7 @@ const WeightDashboard = () => {
           </div>
           <div className='flex justify-center'>
           {/* Display the loading spinner while BMI is being calculated */}
-          {isLoading && <MediumLoadingSpinner />}
+          {targetWeight==null && <MediumLoadingSpinner />}
           {/* Display the BMI calculation if weightData is not empty and BMI is available */}
           {!isLoading && allWeightEntries.length > 0 && (
             <Text pl={16} fontSize='md' color={getBMIColorAndMessage(calculateBMI(allWeightEntries[0]?.weight, height)).color}>
@@ -262,7 +261,7 @@ const WeightDashboard = () => {
             {/* Display the loading placeholder if weightData is empty */}
             {top3WeightEntries.length === 0 && 
               <Flex justify='center'>
-                <LoadingSpinner />
+                <MediumLoadingSpinner />
               </Flex> 
               }
               {/* Display the LineChart if weightData is not empty */}
