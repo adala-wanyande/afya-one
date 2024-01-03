@@ -3,15 +3,16 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import { ChakraProvider } from '@chakra-ui/react'
 import App from './App';
-import { AuthContextProvider } from './Auth/Context/AuthContext';
+import { WorkoutsContextProvider } from './Workout/Context/WorkoutContext'
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <ChakraProvider>
-      <AuthContextProvider>
+      <WorkoutsContextProvider>
         <App />
-      </AuthContextProvider>
+      </WorkoutsContextProvider>
     </ChakraProvider>
   </React.StrictMode>
 );
