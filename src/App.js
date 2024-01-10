@@ -1,19 +1,24 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 // pages & components
-import WorkoutDashboard from './Workout/Pages/WorkoutDashboard'
-import Navbar from './Workout/Components/Navbar'
+import Login from './Auth/Pages/Login'
+import Signup from './Auth/Pages/Signup';
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Navbar />
-        <div className="pages">
+        <div className="">
           <Routes>
             <Route 
-              path="/"
-              element={<WorkoutDashboard />}
+              path="/login"
+              element={<Login />}
+            />
+          </Routes>
+          <Routes>
+            <Route 
+              path="/signup"
+              element={<Signup />}
             />
           </Routes>
         </div>
