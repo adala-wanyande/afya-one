@@ -1,5 +1,5 @@
 import { useState } from "react";
-import image from "./login.jpg"
+import image from "./login.png"
 import { useLogin } from "../Hooks/useLogin"
 import Navbar from "../Components/Navbar";
 
@@ -15,27 +15,28 @@ const Login = () => {
   };
 
   return (
-    <div className="">
+    <div className="bg-[#16172E]">
       <div>
         <Navbar></Navbar>
       </div>
-      <div className="flex">
-        <div className="hidden lg:flex items-center justify-center flex-1 bg-blue-700">
+      <div className="">
+        <div className="flex items-center justify-center flex-1 bg-[#16172E]">
           {/* Side panel with art */}
           <img
             src={image}
             alt="Login Art"
-            className="object-cover w-full"
+            className="object-cover w-[200px] h-[200px]"
           />
         </div>
 
-        <div className="w-full lg:w-1/2 flex items-center justify-center">
+        <div className="mt-16 w-full flex flex-col items-center justify-center">
+          <h1 className="text-[#1AFFD5]">Log In</h1>
           {/* Login form */}
           <form className="min-w-[250px] px-8 lg:px-4 mx-auto" onSubmit={handleSubmit}>
             <div className="">
               <label
                 htmlFor="email"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                className="block mb-2 text-sm font-medium text-[#1AFFD5] dark:text-white"
               >
                 Email address:
               </label>
@@ -53,7 +54,7 @@ const Login = () => {
             <div className="mb-5">
               <label
                 htmlFor="password"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                className="block mb-2 text-sm font-medium text-[#1AFFD5] dark:text-white"
               >
                 Password:
               </label>
@@ -69,7 +70,7 @@ const Login = () => {
             <button
               disabled={isLoading}
               type="submit"
-              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              className="text-white bg-[#FFC801] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
               Log in
             </button>

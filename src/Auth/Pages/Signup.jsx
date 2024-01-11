@@ -1,5 +1,5 @@
 import { useState } from "react";
-import image from "./login.jpg"
+import image from "./login.png"
 import Navbar from "../Components/Navbar";
 import { useSignup } from "../Hooks/useSignup";
 
@@ -31,7 +31,7 @@ const Signup = () => {
         <Navbar></Navbar>
       </div>
       <div className="flex">
-        <div className="hidden lg:flex items-center justify-center flex-1 bg-blue-700">
+        <div className="hidden lg:flex items-center justify-center flex-1 bg-[#16172E]">
           {/* Side panel with art */}
           <img
             src={image}
