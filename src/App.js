@@ -1,34 +1,21 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-// pages & components
-import SignIn from './pages/auth/SignIn'
-import SignUp from './pages/auth/SignUp'
-import UserInfoForm from './pages/user/UserInfo';
+import SignIn from './pages/auth/SignIn';
+import SignUp from './pages/auth/SignUp';
+import CreateUserInfoForm from './pages/user/CreateUserInfo';
+import ViewUserInfo from './pages/user/ViewUserInfo';
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <div className="">
-          <Routes>
-            <Route 
-              path="/signin"
-              element={<SignIn />}
-            />
-          </Routes>
-          <Routes>
-            <Route 
-              path="/signup"
-              element={<SignUp />}
-            />
-          </Routes>
-          <Routes>
-            <Route 
-              path="/info"
-              element={<UserInfoForm />}
-            />
-          </Routes>
-        </div>
+        <Routes>
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/user" element={<ViewUserInfo />} />
+          <Route path="/user/setup" element={<CreateUserInfoForm />} />
+          <Route path="/user/edit" element={<CreateUserInfoForm />} />
+        </Routes>
       </BrowserRouter>
     </div>
   );
