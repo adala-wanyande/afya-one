@@ -39,12 +39,11 @@ function ViewUserInfo() {
     <div>
       {isLoading ? (
         <p>Loading user information...</p> // Show loading message
-      ) : userInfo.dateOfBirth && ( // Render data only when available
+      ) : userInfo.height == 180 && ( // Render data only when available
         <div>
           <h2>User Information</h2>
           <p>Full Name: {userInfo.fullName}</p>
           <p>Date of Birth: {userInfo.dateOfBirth}</p>
-          
           <p>Starting Weight: {userInfo.startingWeight}</p>
           <p>Height: {userInfo.height}</p>
           <button onClick={deleteUserInformation}>Delete My Information</button>

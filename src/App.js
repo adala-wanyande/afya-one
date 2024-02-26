@@ -4,6 +4,7 @@ import SignIn from './pages/auth/SignIn';
 import SignUp from './pages/auth/SignUp';
 import CreateUserInfoForm from './pages/user/CreateUserInfo';
 import ViewUserInfo from './pages/user/ViewUserInfo';
+import UpdateUserInfo from './pages/user/UpdateUserInfo';
 
 function App() {
   return (
@@ -14,7 +15,7 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/user" element={<ViewUserInfo />} />
           <Route path="/user/setup" element={<CreateUserInfoForm />} />
-          <Route path="/user/edit" element={<CreateUserInfoForm />} />
+          <Route path="/user/edit" element={<UpdateUserInfo />} />
         </Routes>
       </BrowserRouter>
     </div>
