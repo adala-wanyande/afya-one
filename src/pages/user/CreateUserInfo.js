@@ -3,7 +3,7 @@ import { auth } from '../../firebase-config';
 import { doc, setDoc } from 'firebase/firestore'; 
 import { db } from '../../firebase-config';
 
-function UserInfoForm() {
+function CreateUserInfoForm() {
   const [fullName, setFullName] = useState('');
   const [dateOfBirth, setDateOfBirth] = useState('');
   const [startingWeight, setStartingWeight] = useState('');
@@ -60,4 +60,4 @@ function UserInfoForm() {
   );
 }
 
-export default UserInfoForm;
+export default CreateUserInfoForm;
