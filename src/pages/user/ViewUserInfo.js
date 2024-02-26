@@ -39,7 +39,7 @@ function ViewUserInfo() {
     <div>
       {isLoading ? (
         <p>Loading user information...</p> // Show loading message
-      ) : userInfo.height == 180 && ( // Render data only when available
+      ) : userInfo.dateOfBirth && ( // Render data only when available
         <div>
           <h2>User Information</h2>
           <p>Full Name: {userInfo.fullName}</p>
