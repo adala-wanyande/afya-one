@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { auth } from '../../firebase-config';
 import { doc, setDoc } from 'firebase/firestore'; 
 import { db } from '../../firebase-config';
+import { useNavigate } from 'react-router-dom';
 
 function CreateUserInfoForm() {
   const [fullName, setFullName] = useState('');
   const [dateOfBirth, setDateOfBirth] = useState('');
   const [startingWeight, setStartingWeight] = useState('');
   const [height, setHeight] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,6 +22,7 @@ function CreateUserInfoForm() {
       try {
         await setDoc(doc(db, 'users', userId), userInfo);
         alert('User information saved successfully!');
+        navigate('/user/');
       } catch (error) {
         console.error("Error adding document: ", error);
       }
