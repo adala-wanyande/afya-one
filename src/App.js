@@ -1,57 +1,58 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { auth, db } from './firebase-config'; // Make sure db is imported
-import { doc, getDoc } from 'firebase/firestore';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { auth } from './firebase-config';
 
 import SignIn from './pages/auth/SignIn';
 import SignUp from './pages/auth/SignUp';
 import CreateUserInfoForm from './pages/user/CreateUserInfo';
 import ViewUserInfo from './pages/user/ViewUserInfo';
 import UpdateUserInfo from './pages/user/UpdateUserInfo';
+import NavBar from './components/navigation/NavBar'; // Adjust the import path according to your project structure
 
-function App() {
+const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [userInfoExists, setUserInfoExists] = useState(false); // New state to track if user info exists
 
   useEffect(() => {
-    const checkUserInfo = async (user) => {
-      const userRef = doc(db, 'users', user.uid);
-      const docSnap = await getDoc(userRef);
-      setUserInfoExists(docSnap.exists()); // Update state based on if user info exists
-    };
-
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        setIsAuthenticated(true);
-        checkUserInfo(user); // Check if user info exists in Firestore
-      } else {
-        setIsAuthenticated(false);
-        setUserInfoExists(false); // Reset state if no user is authenticated
-      }
+      setIsAuthenticated(!!user);
       setIsLoading(false);
     });
 
-    return () => unsubscribe(); // Cleanup subscription
+    return () => unsubscribe();
   }, []);
 
   if (isLoading) {
-    return <div>Loading...</div>; 
+    return <div>Loading...</div>;
   }
 
+  const Layout = ({ children }) => {
+    const location = useLocation();
+    const authRoutes = ['/signin', '/signup'];
+    const showNavBar = isAuthenticated && !authRoutes.includes(location.pathname);
+
+    return (
+      <>
+        {showNavBar && <NavBar />}
+        <div>{children}</div>
+      </>
+    );
+  };
+
   return (
-    <div className="App">
-      <BrowserRouter>
+    <BrowserRouter>
+      <Layout>
         <Routes>
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/user" element={isAuthenticated ? <ViewUserInfo /> : <Navigate to="/signin" />} />
-          <Route path="/user/setup" element={isAuthenticated && !userInfoExists ? <CreateUserInfoForm /> : <Navigate to="/user" />} />
+          <Route path="/user/setup" element={isAuthenticated ? <CreateUserInfoForm /> : <Navigate to="/signin" />} />
           <Route path="/user/edit" element={isAuthenticated ? <UpdateUserInfo /> : <Navigate to="/signin" />} />
+          {/* Add more authenticated routes as needed */}
         </Routes>
-      </BrowserRouter>
-    </div>
+      </Layout>
+    </BrowserRouter>
   );
-}
+};
 
 export default App;
