@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { auth, db } from '../../firebase-config';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { useNavigate } from 'react-router-dom';
 
 function UpdateUserInfo() {
   const [userInfo, setUserInfo] = useState({
@@ -10,6 +11,7 @@ function UpdateUserInfo() {
     height: '',
   });
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   const user = auth.currentUser;
 
@@ -48,6 +50,7 @@ function UpdateUserInfo() {
         ...userInfo
       });
       alert("User information updated successfully!");
+      navigate('/user/');
     }
   };
 
