@@ -1,25 +1,46 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom'; 
-import { signIn } from '../../functions/auth';
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from '../../firebase-config';
 
 function SignInForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
+  const [error, setError] = useState(''); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(''); 
     try {
-      await signIn(email, password);
+      await signInWithEmailAndPassword(auth, email, password);
       navigate('/user'); 
     } catch (error) {
       console.error('Failed to sign in:', error);
-      // Handle login errors (e.g., display a message to the user)
+      handleSignInError(error); // Handle login errors
+    }
+  };
+
+  const handleSignInError = (error) => {
+    switch (error.code) {
+      case 'auth/invalid-email':
+        setError('The email address is not valid.');
+        break;
+      case 'auth/user-disabled':
+        setError('The user corresponding to the given email has been disabled.');
+        break;
+      case 'auth/user-not-found':
+      case 'auth/wrong-password':
+        setError('Incorrect email or password.');
+        break;
+      default:
+        setError('Failed to sign in. Please try again later.');
     }
   };
 
   return (
     <div>
+      {error && <p style={{ color: 'red' }}>{error}</p>}
       <form onSubmit={handleSubmit}>
         <input
           type="email"
