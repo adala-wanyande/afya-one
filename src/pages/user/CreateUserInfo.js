@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
-import { auth } from '../../firebase-config';
-import { doc, setDoc } from 'firebase/firestore'; 
-import { db } from '../../firebase-config';
+import React, { useState, useEffect } from 'react';
+import { auth, db } from '../../firebase-config';
+import { doc, getDoc, setDoc } from 'firebase/firestore'; 
 import { useNavigate } from 'react-router-dom';
 
 function CreateUserInfoForm() {
@@ -10,6 +9,31 @@ function CreateUserInfoForm() {
   const [startingWeight, setStartingWeight] = useState('');
   const [height, setHeight] = useState('');
   const navigate = useNavigate();
+  const [shouldRenderForm, setShouldRenderForm] = useState(false);
+
+  useEffect(() => {
+    const checkUserInfo = async () => {
+      const user = auth.currentUser;
+      if (user) {
+        const userId = user.uid;
+        const docRef = doc(db, 'users', userId);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          alert('User information already exists.');
+          navigate('/user/');
+        } else {
+          // Only render form if no user information exists
+          setShouldRenderForm(true);
+        }
+      } else {
+        // If not authenticated, redirect to sign-in page
+        navigate('/signin');
+      }
+    };
+
+    checkUserInfo();
+  }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,6 +52,11 @@ function CreateUserInfoForm() {
       }
     }
   };
+
+  if (!shouldRenderForm) {
+    // Optionally render nothing or a loader
+    return null;
+  }
 
   return (
     <form onSubmit={handleSubmit}>

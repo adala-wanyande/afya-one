@@ -34,6 +34,7 @@ function ViewUserInfo() {
       await deleteDoc(doc(db, "users", user.uid));
       alert("User information deleted successfully!");
       setUserInfo({});
+      navigate('/user/setup');
     }
   };
 
