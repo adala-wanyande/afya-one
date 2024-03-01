@@ -44,6 +44,9 @@ function SignUpForm() {
 
   return (
     <form onSubmit={handleSubmit} class="rounded-xl border bg-card text-card-foreground shadow">
+      <div class="grid justify-items-end">
+        <Link class="justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2 m-2" to="/signin">Login</Link>
+      </div>
       <div class="flex flex-col p-6 space-y-1">
           <h3 class="font-semibold tracking-tight text-2xl">Create an account</h3>
           <p class="text-sm text-muted-foreground">Enter your email below to create your account</p>
@@ -77,9 +80,13 @@ function SignUpForm() {
             <input class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" id="password" type="password" value={password}
               onChange={(e) => setPassword(e.target.value)}/>
           </div>
-          {error && <ErrorAlert>{error}</ErrorAlert>}
+          <div class="grid gap-2">
+            {error && <ErrorAlert>{error}</ErrorAlert>}
+          </div>
       </div>
-        <div class="flex items-center p-6 pt-0"><button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 w-full">Create account</button></div>
+      <div class="flex items-center p-6 pt-0">
+        <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 w-full">Create account</button>
+      </div>
     </form>
   );
 }
