@@ -558,6 +558,20 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
+.container {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 2rem;
+  padding-left: 2rem;
+}
+
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1400px;
+  }
+}
+
 .absolute {
   position: absolute;
 }
@@ -578,12 +592,21 @@ video {
   top: 1rem;
 }
 
+.left-4 {
+  left: 1rem;
+}
+
 .m-4 {
   margin: 1rem;
 }
 
 .m-2 {
   margin: 0.5rem;
+}
+
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .mr-2 {
@@ -618,12 +641,44 @@ video {
   height: 2.25rem;
 }
 
+.h-6 {
+  height: 1.5rem;
+}
+
+.h-screen {
+  height: 100vh;
+}
+
 .w-4 {
   width: 1rem;
 }
 
 .w-full {
   width: 100%;
+}
+
+.w-6 {
+  width: 1.5rem;
+}
+
+.w-screen {
+  width: 100vw;
+}
+
+.max-w-screen-md {
+  max-width: 768px;
+}
+
+.max-w-96 {
+  max-width: 24rem;
+}
+
+.max-w-lg {
+  max-width: 32rem;
+}
+
+.max-w-screen-lg {
+  max-width: 1024px;
 }
 
 .grid-cols-2 {
@@ -662,6 +717,24 @@ video {
   --tw-space-y-reverse: 0;
   margin-top: calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(0.25rem * var(--tw-space-y-reverse));
+}
+
+.space-y-2 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
+}
+
+.space-y-4 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(1rem * var(--tw-space-y-reverse));
+}
+
+.space-y-6 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(1.5rem * var(--tw-space-y-reverse));
 }
 
 .whitespace-nowrap {
@@ -745,8 +818,17 @@ video {
   padding-bottom: 0.5rem;
 }
 
+.px-8 {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
 .pt-0 {
   padding-top: 0px;
+}
+
+.text-center {
+  text-align: center;
 }
 
 .text-2xl {
@@ -802,6 +884,14 @@ video {
 
 .text-foreground {
   color: hsl(var(--foreground));
+}
+
+.underline {
+  text-decoration-line: underline;
+}
+
+.underline-offset-4 {
+  text-underline-offset: 4px;
 }
 
 .shadow {
@@ -925,6 +1015,12 @@ video {
   border-color: hsl(var(--destructive));
 }
 
+@media (min-width: 640px) {
+  .sm\:w-\[350px\] {
+    width: 350px;
+  }
+}
+
 @media (min-width: 768px) {
   .md\:right-8 {
     right: 2rem;
@@ -932,6 +1028,10 @@ video {
 
   .md\:top-8 {
     top: 2rem;
+  }
+
+  .md\:left-8 {
+    left: 2rem;
   }
 }
 

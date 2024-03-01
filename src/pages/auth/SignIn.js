@@ -2,65 +2,55 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom'; 
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../../firebase-config';
+import { ErrorAlert } from '../../components/alerts/ErrorAlert';
 
 function SignInForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const [error, setError] = useState(''); 
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(''); 
+    setError(''); // Reset error message on new submission
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      navigate('/user'); 
+      navigate('/dashboard'); // Redirect user to dashboard upon successful sign-in
     } catch (error) {
       console.error('Failed to sign in:', error);
-      handleSignInError(error); // Handle login errors
-    }
-  };
-
-  const handleSignInError = (error) => {
-    switch (error.code) {
-      case 'auth/invalid-email':
-        setError('The email address is not valid.');
-        break;
-      case 'auth/user-disabled':
-        setError('The user corresponding to the given email has been disabled.');
-        break;
-      case 'auth/user-not-found':
-      case 'auth/wrong-password':
-        setError('Incorrect email or password.');
-        break;
-      default:
-        setError('Failed to sign in. Please try again later.');
+      setError('Failed to sign in. Please check your email and password.'); // Generic error message for sign in failure
     }
   };
 
   return (
-    <div>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <button type="submit">Sign In</button>
+    <div class="h-screen flex items-center justify-center">
+      <form onSubmit={handleSubmit} class="rounded-xl border bg-card text-card-foreground shadow max-w-screen-lg">
+        <div class="grid justify-items-end">
+          <Link class="justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2 m-2" to="/signup">Sign Up</Link>
+        </div>
+        <div class="flex flex-col p-6 space-y-1">
+            <h3 class="font-semibold tracking-tight text-2xl">Sign in to your account</h3>
+            <p class="text-sm text-muted-foreground">Please enter your details below</p>
+        </div>
+        <div class="p-6 pt-0 grid gap-4">
+            <div class="grid gap-2">
+              <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="email">Email</label>
+              <input class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" id="email" placeholder="m@example.com" type="email" value={email} 
+                onChange={(e) => setEmail(e.target.value)}/>
+            </div>
+            <div class="grid gap-2">
+              <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="password">Password</label>
+              <input class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" id="password" type="password" value={password}
+                onChange={(e) => setPassword(e.target.value)}/>
+            </div>
+            <div class="grid gap-2">
+              {error && <ErrorAlert>{error}</ErrorAlert>}
+            </div>
+        </div>
+        <div class="flex items-center p-6 pt-0">
+          <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 w-full">Sign in</button>
+        </div>
       </form>
-      <p>
-        Don't have an account? <Link to="/signup">Sign up here</Link>.
-      </p>
     </div>
   );
 }
