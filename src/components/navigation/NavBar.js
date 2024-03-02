@@ -40,22 +40,20 @@ const NavBar = () => {
               <NavigationMenuItem>
                 <NavigationMenuTrigger>Weight</NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <NavigationMenuLink asChild>
-                    <a
-                      className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                      href="/"
-                    >
-                      Add new weight entry
-                    </a>
-                  </NavigationMenuLink>
-                  <NavigationMenuLink asChild>
-                    <a
-                      className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                      href="/"
-                    >
-                      View previous weight entries
-                    </a>
-                  </NavigationMenuLink>
+                  <ul className="grid w-[250px] gap-3 p-4 md:w-[250px] md:grid-cols-1 lg:w-[250px]">
+                    <li class="hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                      <Link  className="pl-2 text-sm leading-tight text-muted-foreground"
+                      to="/weight/new">
+                        Add new weight entry
+                      </Link>
+                    </li>
+                    <li class="hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                      <Link  className="pl-2 text-sm leading-tight text-muted-foreground"
+                      to="/weight/all">
+                        View previous weight entries
+                      </Link>
+                    </li>
+                  </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
             </NavigationMenuList>
@@ -65,22 +63,20 @@ const NavBar = () => {
               <NavigationMenuItem>
                 <NavigationMenuTrigger>Workouts</NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <NavigationMenuLink asChild>
-                    <a
-                      className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                      href="/"
-                    >
-                      Add new workout
-                    </a>
-                  </NavigationMenuLink>
-                  <NavigationMenuLink asChild>
-                    <a
-                      className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                      href="/"
-                    >
-                      View previous workouts
-                    </a>
-                  </NavigationMenuLink>
+                  <ul className="grid w-[200px] gap-3 p-4 md:w-[200px] md:grid-cols-1 lg:w-[200px]">
+                    <li class="hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                      <Link  className="pl-2 text-sm leading-tight text-muted-foreground"
+                      to="/workout/new">
+                        Add new workout
+                      </Link>
+                    </li>
+                    <li class="hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                      <Link  className="pl-2 text-sm leading-tight text-muted-foreground"
+                      to="/workout/all">
+                        View previous workouts
+                      </Link>
+                    </li>
+                  </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
             </NavigationMenuList>
@@ -90,22 +86,20 @@ const NavBar = () => {
               <NavigationMenuItem>
                 <NavigationMenuTrigger>Nutrition</NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <NavigationMenuLink asChild>
-                    <a
-                      className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                      href="/"
-                    >
-                      Add new nutrition entry
-                    </a>
-                  </NavigationMenuLink>
-                  <NavigationMenuLink asChild>
-                    <a
-                      className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                      href="/"
-                    >
-                      View previous nutrition entries
-                    </a>
-                  </NavigationMenuLink>
+                  <ul className="grid w-[250px] gap-3 p-4 md:w-[250px] md:grid-cols-1 lg:w-[250px]">
+                    <li class="hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                      <Link  className="pl-2 text-sm leading-tight text-muted-foreground"
+                      to="/nutrition/new">
+                        Add new nutrition entry
+                      </Link>
+                    </li>
+                    <li class="hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                      <Link  className="pl-2 text-sm leading-tight text-muted-foreground"
+                      to="/nutrition/all">
+                        View previous nutrition entries
+                      </Link>
+                    </li>
+                  </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
             </NavigationMenuList>
@@ -115,22 +109,20 @@ const NavBar = () => {
               <NavigationMenuItem>
                 <NavigationMenuTrigger>Sleep</NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <NavigationMenuLink asChild>
-                    <a
-                      className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                      href="/"
-                    >
-                      Add new sleep entry
-                    </a>
-                  </NavigationMenuLink>
-                  <NavigationMenuLink asChild>
-                    <a
-                      className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                      href="/"
-                    >
-                      View previous sleep entries
-                    </a>
-                  </NavigationMenuLink>
+                  <ul className="grid w-[250px] gap-3 p-4 md:w-[250px] md:grid-cols-1 lg:w-[250px]">
+                    <li class="hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                      <Link  className="pl-2 text-sm leading-tight text-muted-foreground"
+                      to="/sleep/new">
+                        Add new sleep entry
+                      </Link>
+                    </li>
+                    <li class="hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                      <Link  className="pl-2 text-sm leading-tight text-muted-foreground"
+                      to="/sleep/all">
+                        View previous sleep entries
+                      </Link>
+                    </li>
+                  </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
             </NavigationMenuList>
@@ -140,30 +132,26 @@ const NavBar = () => {
               <NavigationMenuItem>
                 <NavigationMenuTrigger>Timetable</NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <NavigationMenuLink asChild>
-                    <a
-                      className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                      href="/"
-                    >
-                      View current timetable
-                    </a>
-                  </NavigationMenuLink>
-                  <NavigationMenuLink asChild>
-                    <a
-                      className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                      href="/"
-                    >
-                      View previous timetables
-                    </a>
-                  </NavigationMenuLink>
-                  <NavigationMenuLink asChild>
-                    <a
-                      className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                      href="/"
-                    >
-                      Create new timetable
-                    </a>
-                  </NavigationMenuLink>
+                  <ul className="grid w-[200px] gap-3 p-4 md:w-[200px] md:grid-cols-1 lg:w-[200px]">
+                    <li class="hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                      <Link  className="pl-2 text-sm leading-tight text-muted-foreground"
+                      to="/timetable">
+                        View current timetable
+                      </Link>
+                    </li>
+                    <li class="hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                      <Link  className="pl-2 text-sm leading-tight text-muted-foreground"
+                      to="/timetable/all">
+                        View previous timetables
+                      </Link>
+                    </li>
+                    <li class="hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                      <Link  className="pl-2 text-sm leading-tight text-muted-foreground"
+                      to="/timetable/create">
+                        Create new timetable
+                      </Link>
+                    </li>
+                  </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
             </NavigationMenuList>
@@ -173,27 +161,28 @@ const NavBar = () => {
               <NavigationMenuItem>
                 <NavigationMenuTrigger>User Info</NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <NavigationMenuLink asChild>
-                    <Link
-                      className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                      to="/user/"
-                    >
-                      View user information
-                    </Link>
-                  </NavigationMenuLink>
-                  <NavigationMenuLink asChild>
-                    <Link
-                      className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                      to="/user/edit"
-                    >
-                      Update user information
-                    </Link>
-                  </NavigationMenuLink>
-                  <NavigationMenuLink>
-                    <button onClick={handleSignOut}>
-                      Sign Out
-                    </button>
-                  </NavigationMenuLink>
+                  <div className="divide-y divide-gray-100">
+                    <ul className="grid w-[200px] gap-3 p-4 md:w-[200px] md:grid-cols-1 lg:w-[200px]">
+                      <li class="hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                        <Link  className="pl-2 py-2 my-2 text-sm leading-tight text-muted-foreground"
+                        to="/user/">
+                          View user information
+                        </Link>
+                      </li>
+                      <li class="hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                        <Link  className="pl-2 py-2 my-2 text-sm leading-tight text-muted-foreground"
+                        to="/user/edit">
+                          Update user information
+                        </Link>
+                      </li>
+                    </ul>
+                    <div class="flex justify-center py-4">
+                      <Button
+                        onClick={handleSignOut}>
+                        Sign out
+                      </Button>
+                    </div>
+                  </div>
                 </NavigationMenuContent>
               </NavigationMenuItem>
             </NavigationMenuList>
