@@ -36,8 +36,8 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div>
-      {firstName ? <h1>Welcome back, {firstName}!</h1> : <h1>Loading...</h1>}
+    <div className='mx-36 scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-8'>
+      {firstName ? <h1>Welcome back, {firstName} 👋! </h1> : <h1>Loading...</h1>}
     </div>
   );
 };
