@@ -7,7 +7,8 @@ import SignUp from './pages/auth/SignUp';
 import CreateUserInfoForm from './pages/user/CreateUserInfo';
 import ViewUserInfo from './pages/user/ViewUserInfo';
 import UpdateUserInfo from './pages/user/UpdateUserInfo';
-import NavBar from './components/navigation/NavBar'; // Adjust the import path according to your project structure
+import NavBar from './components/navigation/NavBar'; 
+import Dashboard from './pages/dashboard/Dashboard';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -46,6 +47,7 @@ const App = () => {
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/user" element={isAuthenticated ? <ViewUserInfo /> : <Navigate to="/signin" />} />
+          <Route path="/dashboard" element={isAuthenticated ? <Dashboard /> : <Navigate to="/dashboard" />} />
           <Route path="/user/setup" element={isAuthenticated ? <CreateUserInfoForm /> : <Navigate to="/signin" />} />
           <Route path="/user/edit" element={isAuthenticated ? <UpdateUserInfo /> : <Navigate to="/signin" />} />
           {/* Add more authenticated routes as needed */}
