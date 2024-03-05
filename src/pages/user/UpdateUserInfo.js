@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { auth, db } from '../../firebase-config';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
-import { DatePickerDemo } from '../../components/forms/DatePicker';
+import { DatePicker } from '../../components/forms/DatePicker';
 import { Button } from "../../components/ui/button";
 
 function UpdateUserInfo() {
@@ -13,6 +13,7 @@ function UpdateUserInfo() {
     height: '',
   });
   const [isLoading, setIsLoading] = useState(true);
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false); // New state to control the visibility of the success alert
   const navigate = useNavigate();
 
   const user = auth.currentUser;
@@ -51,9 +52,41 @@ function UpdateUserInfo() {
       await updateDoc(userRef, {
         ...userInfo
       });
-      alert("User information updated successfully!");
-      navigate('/user/');
+      setShowSuccessAlert(true); // Show the success alert
+      setTimeout(() => setShowSuccessAlert(false), 4000); // Hide the alert after 5 seconds
+      navigate('/user/'); // Consider navigating after showing the alert or based on user action
     }
+  };
+
+  // New function to handle decrement
+  const handleHeightDecrement = () => {
+    setUserInfo(prevState => ({
+      ...prevState,
+      height: String(Math.max(0, Number(prevState.height) - 0.5)) // Prevents negative values, adjust as needed
+    }));
+  };
+
+  // New function to handle increment
+  const handleHeightIncrement = () => {
+    setUserInfo(prevState => ({
+      ...prevState,
+      height: String(Number(prevState.height) + 0.5)
+    }));
+  };
+
+  const handleWeightDecrement = () => {
+    setUserInfo(prevState => ({
+      ...prevState,
+      startingWeight: String(Math.max(0, Number(prevState.startingWeight) - 0.5)) // Prevents negative values, adjust as needed
+    }));
+  };
+
+  // Corrected function to handle weight increment
+  const handleWeightIncrement = () => {
+    setUserInfo(prevState => ({
+      ...prevState,
+      startingWeight: String(Number(prevState.startingWeight) + 0.5)
+    }));
   };
 
   return (
@@ -63,8 +96,8 @@ function UpdateUserInfo() {
       ) : (
         <>
         <h2 className='mx-36 scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-8 mb-8'>Update your information</h2>
-        <form class="max-w-sm mx-auto">
-          <label for="website-admin" class="block mb-4 text-sm font-medium text-gray-900 dark:text-white">Your full name</label>
+        <form class="max-w-sm mx-auto" onSubmit={handleSubmit}>
+        <label for="website-admin" class="block mb-4 text-sm font-medium text-gray-900 dark:text-white">Your full name</label>
           <div class="flex mb-4" flex flex-col justify-center>
             <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-e-0 border-gray-300 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
               <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -81,7 +114,7 @@ function UpdateUserInfo() {
           </div>
           <label for="counter-input" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Choose your starting weight (kg):</label>
           <div class="relative flex items-center mb-4 flex justify-center">
-              <button type="button" id="decrement-button" data-input-counter-decrement="counter-input" class="flex-shrink-0 bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 inline-flex items-center justify-center border border-gray-300 rounded-md h-5 w-5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
+              <button type="button" id="decrement-button" onClick={handleWeightDecrement} data-input-counter-decrement="startingWeight" class="flex-shrink-0 bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 inline-flex items-center justify-center border border-gray-300 rounded-md h-5 w-5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
                   <svg class="w-2.5 h-2.5 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16"/>
                   </svg>
@@ -94,7 +127,7 @@ function UpdateUserInfo() {
                 type="text" 
                 data-input-counter 
                 class="flex-shrink-0 text-gray-900 dark:text-white border-0 bg-transparent text-sm font-normal focus:outline-none focus:ring-0 max-w-[2.5rem] text-center" placeholder="" required />
-              <button type="button" id="increment-button" data-input-counter-increment="counter-input" class="flex-shrink-0 bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 inline-flex items-center justify-center border border-gray-300 rounded-md h-5 w-5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
+              <button type="button" id="increment-button" onClick={handleWeightIncrement} data-input-counter-increment="startingWeight" class="flex-shrink-0 bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 inline-flex items-center justify-center border border-gray-300 rounded-md h-5 w-5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
                   <svg class="w-2.5 h-2.5 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
                   </svg>
@@ -102,7 +135,7 @@ function UpdateUserInfo() {
           </div>
           <label for="counter-input" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Choose your starting height (cm):</label>
           <div class="relative flex items-center mb-4 flex justify-center">
-              <button type="button" id="decrement-button" data-input-counter-decrement="counter-input" class="flex-shrink-0 bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 inline-flex items-center justify-center border border-gray-300 rounded-md h-5 w-5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
+              <button type="button" id="decrement-button" onClick={handleHeightDecrement} data-input-counter-decrement="startingHeight" class="flex-shrink-0 bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 inline-flex items-center justify-center border border-gray-300 rounded-md h-5 w-5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
                   <svg class="w-2.5 h-2.5 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16"/>
                   </svg>
@@ -114,7 +147,7 @@ function UpdateUserInfo() {
                 onChange={handleChange} 
                 data-input-counter 
                 class="flex-shrink-0 text-gray-900 dark:text-white border-0 bg-transparent text-sm font-normal focus:outline-none focus:ring-0 max-w-[2.5rem] text-center" placeholder="" required />
-              <button type="button" id="increment-button" data-input-counter-increment="counter-input" class="flex-shrink-0 bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 inline-flex items-center justify-center border border-gray-300 rounded-md h-5 w-5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
+              <button type="button" id="increment-button" onClick={handleHeightIncrement} data-input-counter-increment="startingHeight" class="flex-shrink-0 bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 inline-flex items-center justify-center border border-gray-300 rounded-md h-5 w-5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
                   <svg class="w-2.5 h-2.5 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
                   </svg>
@@ -122,14 +155,22 @@ function UpdateUserInfo() {
           </div>
           <label for="counter-input" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Choose your date of birth:</label>
           <div class='flex justify-center'>
-            <DatePickerDemo></DatePickerDemo>
+          <DatePicker
+            name="dateOfBirth"
+            value={userInfo.dateOfBirth}
+            onChange={handleChange}
+          />
           </div>
+          {showSuccessAlert && (
+            <div class="p-4 mt-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
+              <span class="font-medium">Success alert!</span> Your information has been updated successfully.
+            </div>
+          )}
           <div class="flex justify-evenly mt-8">
             <Button type="submit">Update information</Button>
             <Button variant="destructive">Delete your information</Button>
           </div>
         </form>
-
         </>
       )}
     </div>
