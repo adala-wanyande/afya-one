@@ -9,6 +9,7 @@ import ViewUserInfo from './pages/user/ViewUserInfo';
 import UpdateUserInfo from './pages/user/UpdateUserInfo';
 import NavBar from './components/navigation/NavBar'; 
 import Dashboard from './pages/dashboard/Dashboard';
+import CreateWorkout from './pages/workout/CreateWorkout';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -50,6 +51,7 @@ const App = () => {
           <Route path="/dashboard" element={isAuthenticated ? <Dashboard /> : <Navigate to="/dashboard" />} />
           <Route path="/user/setup" element={isAuthenticated ? <CreateUserInfoForm /> : <Navigate to="/signin" />} />
           <Route path="/user/edit" element={isAuthenticated ? <UpdateUserInfo /> : <Navigate to="/signin" />} />
+          <Route path="/workout/new" element={isAuthenticated ? <CreateWorkout /> : <Navigate to="/signin" />} />
           {/* Add more authenticated routes as needed */}
         </Routes>
       </Layout>
