@@ -21,7 +21,6 @@ function CreateWorkout() {
   useEffect(() => {
     const user = auth.currentUser;
     if (!user) {
-      // If not authenticated, redirect to sign-in page
       navigate("/signin");
     }
   }, [navigate]);
@@ -58,10 +57,10 @@ function CreateWorkout() {
     const user = auth.currentUser;
     if (user) {
       const userId = user.uid;
-      const workoutData = { date, workouts };
+      const workoutData = { date, workouts, userId };
 
       try {
-        await setDoc(doc(db, "workouts", userId), workoutData);
+        await setDoc(doc(db, "workouts", `${userId}_${Date.now()}`), workoutData);
         alert("Workout information saved successfully!");
         navigate("/dashboard/");
       } catch (error) {
