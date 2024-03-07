@@ -66,6 +66,9 @@ function ViewWorkouts() {
               <p className="font-medium text-gray-900 dark:text-white">
                 Date: {format(workout.date, 'MMMM dd, yyyy')}
               </p>
+              <p className="font-medium text-gray-900 dark:text-white">
+                Training Day: {workout.bodyPart}
+              </p>
               {workout.workouts && workout.workouts.length > 0 ? (
                 <ol className="mt-2 list-decimal ml-5"> {/* Changed from <ul> to <ol> for numbered list of exercises */}
                   {workout.workouts.map((exercise, index) => (
