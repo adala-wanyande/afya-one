@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { auth } from "../../firebase-config";
 import logo from "../../assets/images/afya-one-logo.jpg";
@@ -6,10 +6,8 @@ import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
 } from "../../components/ui/navigation-menu";
 import { Button } from "../../components/ui/button";
 
