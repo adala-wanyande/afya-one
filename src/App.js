@@ -49,12 +49,13 @@ const App = () => {
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/user" element={isAuthenticated ? <ViewUserInfo /> : <Navigate to="/signin" />} />
-          <Route path="/dashboard" element={isAuthenticated ? <Dashboard /> : <Navigate to="/dashboard" />} />
+          <Route path="/dashboard" element={isAuthenticated ? <Dashboard /> : <Navigate to="/signin" />} />
           <Route path="/user/setup" element={isAuthenticated ? <CreateUserInfoForm /> : <Navigate to="/signin" />} />
           <Route path="/user/edit" element={isAuthenticated ? <UpdateUserInfo /> : <Navigate to="/signin" />} />
           <Route path="/workout/new" element={isAuthenticated ? <CreateWorkout /> : <Navigate to="/signin" />} />
           <Route path="/workout/all" element={isAuthenticated ? <ViewWorkouts /> : <Navigate to="/signin" />} />
-          {/* Add more authenticated routes as needed */}
+          {/* Redirect non-authenticated users to the sign-in page for any other routes */}
+          <Route path="*" element={!isAuthenticated ? <Navigate to="/signin" /> : <Navigate to="/dashboard" />} />
         </Routes>
       </Layout>
     </BrowserRouter>
