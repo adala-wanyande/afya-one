@@ -90,33 +90,6 @@ const NavBar = () => {
             <NavigationMenu>
               <NavigationMenuList>
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger>Weight</NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <ul className="grid w-[250px] gap-3 p-4 md:w-[250px] md:grid-cols-1 lg:w-[250px]">
-                      <li class="hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
-                        <Link
-                          className="pl-2 text-sm leading-tight text-muted-foreground"
-                          to="/weight/new"
-                        >
-                          Add new weight entry
-                        </Link>
-                      </li>
-                      <li class="hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
-                        <Link
-                          className="pl-2 text-sm leading-tight text-muted-foreground"
-                          to="/weight/all"
-                        >
-                          View previous weight entries
-                        </Link>
-                      </li>
-                    </ul>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-              </NavigationMenuList>
-            </NavigationMenu>
-            <NavigationMenu>
-              <NavigationMenuList>
-                <NavigationMenuItem>
                   <NavigationMenuTrigger>Workouts</NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <ul className="grid w-[200px] gap-3 p-4 md:w-[200px] md:grid-cols-1 lg:w-[200px]">
@@ -134,6 +107,33 @@ const NavBar = () => {
                           to="/workout/all"
                         >
                           View previous workouts
+                        </Link>
+                      </li>
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
+            <NavigationMenu>
+              <NavigationMenuList>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger>Weight</NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="grid w-[250px] gap-3 p-4 md:w-[250px] md:grid-cols-1 lg:w-[250px]">
+                      <li class="hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                        <Link
+                          className="pl-2 text-sm leading-tight text-muted-foreground"
+                          to="/weight/new"
+                        >
+                          Add new weight entry
+                        </Link>
+                      </li>
+                      <li class="hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                        <Link
+                          className="pl-2 text-sm leading-tight text-muted-foreground"
+                          to="/weight/all"
+                        >
+                          View previous weight entries
                         </Link>
                       </li>
                     </ul>
