@@ -76,7 +76,7 @@ const NavBar = () => {
       <div className="flex justify-between mb-2 items-center lg:mx-32">
         <div className="grid content-center">
           <Link
-            to="/"
+            to="/dashboard"
             className="flex items-center space-x-3 rtl:space-x-reverse"
           >
             <img src={logo} className="h-8" alt="Afya One Logo" />
