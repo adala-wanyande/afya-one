@@ -87,30 +87,30 @@ function ViewWorkouts() {
       {sortedWorkouts.length > 0 ? (
         <ol className="text-sm text-left text-gray-500 dark:text-gray-400 mt-4">
           {sortedWorkouts.map((workout) => (
-            <li key={workout.id} className="mb-4">
-              <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight text-[#C62828]">
+            <li key={workout.id} className="mb-2">
+              <h3 className="lg:scroll-m-20 text-xl font-semibold tracking-tight text-[#C62828]">
                 {format(workout.date, "MMMM dd, yyyy")} - {workout.bodyPart}
               </h3>
               {workout.workouts && workout.workouts.length > 0 ? (
-                <ol className="mt-2 list-decimal divide-y divide-y-8">
+                <ol className="list-decimal divide-y divide-y-8">
                   {workout.workouts.map((exercise, index) => (
                     <li
                       key={index}
-                      className="py-4 mb-2 flex flex-col divide-y divide-y-2"
+                      className="py-4 flex flex-col divide-y divide-y-1"
                     >
-                      <p className="my-1 font-medium text-gray-900 dark:text-white text-[#F08080]">
+                      <p className="py-1 font-medium text-gray-900 dark:text-white text-[#F08080]">
                         {exercise.name}
                       </p>
-                      <p className="my-1">Weight: {exercise.weight} kg</p>
-                      <p className="my-1">Reps: {exercise.reps} reps</p>
-                      <p className="my-1">Sets: {exercise.sets} sets</p>
-                      <p className="my-1">
+                      <p className="py-1">Weight: {exercise.weight} kg</p>
+                      <p className="py-1">Reps: {exercise.reps} reps</p>
+                      <p className="py-1">Sets: {exercise.sets} sets</p>
+                      <p className="py-1">
                         Next Target Weight: {exercise.nextWeight} kg
                       </p>
-                      <p className="my-1">
+                      <p className="py-1">
                         Next Target Reps: {exercise.nextReps} reps
                       </p>
-                      <p className="my-1">
+                      <p className="py-1">
                         Next Target Sets: {exercise.nextSets} sets
                       </p>
                     </li>
