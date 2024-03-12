@@ -61,7 +61,7 @@ const Dashboard = () => {
   }, [navigate]);
 
   const dates = Object.keys(workoutData);
-  const until = dates.length ? dates.reduce((a, b) => (a > b ? a : b)) : new Date().toISOString().split('T')[0];
+  const today = new Date().toISOString().split('T')[0];
 
   // Show loading text if isLoading is true
   if (isLoading) {
@@ -79,7 +79,7 @@ const Dashboard = () => {
         </h3>
       </div>
       <div className='m-8 flex justify-center'>
-        <Calendar values={workoutData} until={until} panelColors={panelColors}/>
+        <Calendar values={workoutData} until={today} panelColors={panelColors}/>
       </div>
     </>
   );
