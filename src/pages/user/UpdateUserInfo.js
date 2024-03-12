@@ -103,7 +103,7 @@ function UpdateUserInfo() {
         </div>
       ) : (
         <>
-        <h2 className='mx-36 scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-8 mb-8'>Update your information</h2>
+        <h2 className='mx-36 lg:scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-8 mb-8'>Update your information</h2>
         <form class="max-w-sm mx-auto" onSubmit={handleSubmit}>
         <label for="website-admin" class="block mb-4 text-sm font-medium text-gray-900 dark:text-white">Your full name</label>
           <div class="flex mb-4" flex flex-col justify-center>

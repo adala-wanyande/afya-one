@@ -72,7 +72,7 @@ function ViewWorkouts() {
 
   return (
     <div className="mx-8 lg:mx-32 relative overflow-x-auto sm:rounded-lg p-5 bg-white dark:bg-gray-800">
-      <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-8 mb-4">
+      <h2 className="lg:scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-8 mb-4">
         My Workouts
       </h2>
       <div className="flex justify-end">
