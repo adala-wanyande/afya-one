@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
-import { db, auth } from "../../firebase-config"; 
+import { db, auth } from "../../firebase-config";
 import { onAuthStateChanged } from "firebase/auth";
 
 const UpdateWorkout = () => {
@@ -50,9 +50,9 @@ const UpdateWorkout = () => {
     try {
       await updateDoc(workoutRef, {
         ...workoutDetails,
-        date: workoutDetails.date, 
+        date: workoutDetails.date,
       });
-      navigate("/workout/all"); 
+      navigate("/workout/all");
     } catch (error) {
       console.error("Error updating document: ", error);
     }
@@ -76,96 +76,174 @@ const UpdateWorkout = () => {
   if (!workoutDetails) return <div>Loading...</div>;
 
   return (
-    <form onSubmit={handleUpdate}>
-      <label>
-        Date:
-        <input
-          type="date"
-          name="date"
-          value={workoutDetails.date}
-          onChange={handleInputChange}
-        />
-      </label>
-      <label>
-        Body Part:
-        <input
-          type="text"
-          name="bodyPart"
-          value={workoutDetails.bodyPart}
-          onChange={handleInputChange}
-        />
-      </label>
-      {workoutDetails.workouts.map((workout, index) => (
-        <div key={index}>
-          <h3>Workout {index + 1}</h3>
-          <label>
-            Weight:
+    <div className="mx-8 lg:mx-32 relative overflow-x-auto sm:rounded-lg bg-white dark:bg-gray-800">
+      <h2 className="lg:scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-8 mb-4">
+        Edit Workout
+      </h2>
+      <form onSubmit={handleUpdate} className="mt-4 mx-8">
+        <div className="mb-5">
+          <label
+            htmlFor="date"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >
+            Date:
             <input
-              type="text"
-              name="weight"
-              value={workout.weight}
-              onChange={(e) => handleInputChange(e, index, "weight")}
-            />
-          </label>
-          <label>
-            Reps:
-            <input
-              type="text"
-              name="reps"
-              value={workout.reps}
-              onChange={(e) => handleInputChange(e, index, "reps")}
-            />
-          </label>
-          <label>
-            Sets:
-            <input
-              type="text"
-              name="sets"
-              value={workout.sets}
-              onChange={(e) => handleInputChange(e, index, "sets")}
-            />
-          </label>
-
-          <label>
-            Name:
-            <input
-              type="text"
-              name="name"
-              value={workout.name}
-              onChange={(e) => handleInputChange(e, index, "name")}
-            />
-          </label>
-          <label>
-            Next Reps:
-            <input
-              type="text"
-              name="nextReps"
-              value={workout.nextReps}
-              onChange={(e) => handleInputChange(e, index, "nextReps")}
-            />
-          </label>
-          <label>
-            Next Sets:
-            <input
-              type="text"
-              name="nextSets"
-              value={workout.nextSets}
-              onChange={(e) => handleInputChange(e, index, "nextSets")}
-            />
-          </label>
-          <label>
-            Next Weight:
-            <input
-              type="text"
-              name="nextWeight"
-              value={workout.nextWeight}
-              onChange={(e) => handleInputChange(e, index, "nextWeight")}
+              type="date"
+              name="date"
+              id="date" // Make sure this matches the htmlFor attribute of the label for accessibility
+              value={workoutDetails.date}
+              onChange={handleInputChange}
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              required
             />
           </label>
         </div>
-      ))}
-      <button type="submit">Save Changes</button>
-    </form>
+        <div className="mb-5">
+          <label
+            htmlFor="bodyPart"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >
+            Body Part:
+            <input
+              type="text"
+              name="bodyPart"
+              id="bodyPart" // Make sure this matches the htmlFor attribute of the label for accessibility
+              value={workoutDetails.bodyPart}
+              onChange={handleInputChange}
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              required
+            />
+          </label>
+        </div>
+        {workoutDetails.workouts.map((workout, index) => (
+          <div key={index} className="mb-5">
+            <h3 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              Exercise {index + 1}
+            </h3>
+            {/* Repeat the input styling for each workout detail (weight, reps, etc.) similarly */}
+            <label
+              htmlFor="name"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Exercise Name:{" "}
+            </label>
+
+            <input
+              type="text"
+              name="name"
+              placeholder="Workout Name"
+              value={workout.name}
+              onChange={(e) => handleInputChange(e, index, "name")}
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
+            />
+            <label
+              htmlFor="weight"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Weight:{" "}
+            </label>
+
+            <input
+              type="number"
+              name="weight"
+              placeholder="Weight"
+              value={workout.weight}
+              onChange={(e) => handleInputChange(e, index, "weight")}
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
+            />
+            <label
+              htmlFor="reps"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Reps:{" "}
+            </label>
+
+            <input
+              type="number"
+              name="reps"
+              placeholder="Reps"
+              value={workout.reps}
+              onChange={(e) => handleInputChange(e, index, "reps")}
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
+            />
+            <label
+              htmlFor="sets"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Sets:{" "}
+            </label>
+
+            <input
+              type="number"
+              name="sets"
+              placeholder="Sets"
+              value={workout.sets}
+              onChange={(e) => handleInputChange(e, index, "sets")}
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
+            />
+
+            <label
+              htmlFor="name"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Next Target Weight:{" "}
+            </label>
+
+            <input
+              type="number"
+              name="nextWeight"
+              placeholder="Next Weight (lbs/kg)"
+              value={workout.nextWeight}
+              onChange={(e) => handleInputChange(e, index, "nextWeight")}
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
+            />
+
+            <label
+              htmlFor="name"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Next Target Reps:{" "}
+            </label>
+
+            <input
+              type="number"
+              name="nextReps"
+              placeholder="Next Reps"
+              value={workout.nextReps}
+              onChange={(e) => handleInputChange(e, index, "nextReps")}
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
+            />
+
+            {/* Input for nextSets */}
+            <label
+              htmlFor="name"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Next Target Sets:{" "}
+            </label>
+
+            <input
+              type="text"
+              name="nextSets"
+              placeholder="Next Sets"
+              value={workout.nextSets}
+              onChange={(e) => handleInputChange(e, index, "nextSets")}
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
+            />
+
+            {/* Optionally, you could add a button to remove a workout, styled similarly to your template */}
+          </div>
+        ))}
+        <div className="flex justify-center">
+          <button
+            type="submit"
+            className="mt-5 text-white bg-[#C72929] hover:bg-[#B34040] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
+            Save Changes
+          </button>
+        </div>
+      </form>
+    </div>
   );
 };
 
