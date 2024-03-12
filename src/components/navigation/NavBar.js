@@ -32,7 +32,15 @@ const NavBar = () => {
 
   const toggleNav = () => {
     setNavOpen(!navOpen);
+    setWorkoutsDropdownOpen(false);
+    setWeightDropdownOpen(false);
+    setNutritionDropdownOpen(false);
+    setSleepDropdownOpen(false);
+    setTimetableDropdownOpen(false);
+    setUserInfoDropdownOpen(false);
   };
+
+
 
   // Toggle function for the nested dropdown
   const toggleWorkoutsDropdown = (e) => {
