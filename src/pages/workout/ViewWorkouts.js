@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { auth, db } from "../../firebase-config";
+import { useNavigate } from 'react-router-dom';
 import { collection, query, where, getDocs, deleteDoc, doc } from "firebase/firestore";
 import { format } from "date-fns";
 import { ArrowUpDown } from "lucide-react";
@@ -7,7 +8,8 @@ import { ArrowUpDown } from "lucide-react";
 function ViewWorkouts() {
   const [workouts, setWorkouts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [sortOrder, setSortOrder] = useState("desc"); 
+  const [sortOrder, setSortOrder] = useState("desc");
+  const navigate = useNavigate(); 
 
   const deleteWorkout = async (workoutId) => {
     // Confirm before deleting
@@ -106,6 +108,13 @@ function ViewWorkouts() {
                 <h3 className="lg:scroll-m-20 text-xl font-semibold tracking-tight text-[#C62828]">
                   {format(workout.date, "MMMM dd, yyyy")} - {workout.bodyPart}
                 </h3>
+                <div>
+                  <button
+                    onClick={() => navigate(`/workout/edit/${workout.id}`)}
+                    className="px-3 py-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2"
+                  >
+                    Edit
+                  </button>
                   <button
                     onClick={() => deleteWorkout(workout.id)}
                     className="bg-red-500 hover:bg-red-700 text-white font-bold p-1 rounded inline-flex items-center"
@@ -127,6 +136,7 @@ function ViewWorkouts() {
                     </svg>
                     Delete Workout
                   </button>
+                </div>
               </div>
               {workout.workouts && workout.workouts.length > 0 ? (
                 <ol className="list-decimal divide-y divide-y-8">
