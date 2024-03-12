@@ -330,6 +330,7 @@ const NavBar = () => {
                       <Link
                         to="/workout/new"
                         className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                        onClick={toggleNav}
                       >
                         Add new workout
                       </Link>
@@ -338,6 +339,7 @@ const NavBar = () => {
                       <Link
                         to="/workout/all"
                         className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                        onClick={toggleNav}
                       >
                         View previous workouts
                       </Link>
@@ -377,6 +379,7 @@ const NavBar = () => {
                       <Link
                         to="weight/new"
                         className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                        onClick={toggleNav}
                       >
                         Add new weight entry
                       </Link>
@@ -385,6 +388,7 @@ const NavBar = () => {
                       <Link
                         to="weight/all"
                         className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                        onClick={toggleNav}
                       >
                         View previous weight entries
                       </Link>
@@ -423,6 +427,7 @@ const NavBar = () => {
                       <Link
                         to="/nutrition/new"
                         className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                        onClick={toggleNav}
                       >
                         Add new nutrition entry
                       </Link>
@@ -431,6 +436,7 @@ const NavBar = () => {
                       <Link
                         href="/nutrition/all"
                         className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                        onClick={toggleNav}
                       >
                         View previous nutrition entries
                       </Link>
@@ -469,6 +475,7 @@ const NavBar = () => {
                       <Link
                         to="/sleep/new"
                         className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                        onClick={toggleNav}
                       >
                         Add new sleep entry
                       </Link>
@@ -477,6 +484,7 @@ const NavBar = () => {
                       <Link
                         to="/sleep/all"
                         className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                        onClick={toggleNav}
                       >
                         View previous sleep entries
                       </Link>
@@ -515,6 +523,7 @@ const NavBar = () => {
                       <Link
                         to="/timetable"
                         className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                        onClick={toggleNav}
                       >
                         View current timetable
                       </Link>
@@ -523,6 +532,7 @@ const NavBar = () => {
                       <Link
                         to="/timetable/all"
                         className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                        onClick={toggleNav}
                       >
                         View previous timetables
                       </Link>
@@ -531,6 +541,7 @@ const NavBar = () => {
                       <Link
                         to="/timetable/new"
                         className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                        onClick={toggleNav}
                       >
                         Create new timetable
                       </Link>
@@ -569,6 +580,7 @@ const NavBar = () => {
                       <Link
                         to="/user/"
                         className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                        onClick={toggleNav}
                       >
                         View user information
                       </Link>
@@ -577,6 +589,7 @@ const NavBar = () => {
                       <Link
                         to="/user/edit"
                         className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                        onClick={toggleNav}
                       >
                         Update user information
                       </Link>
