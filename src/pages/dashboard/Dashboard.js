@@ -78,7 +78,7 @@ const Dashboard = () => {
           Your Workout Contribution Graph
         </h3>
       </div>
-      <div className='m-8 flex justify-center'>
+      <div className='mx-8 lg:mx-36 mt-4 flex justify-center'>
         <Calendar values={workoutData} until={today} panelColors={panelColors}/>
       </div>
     </>

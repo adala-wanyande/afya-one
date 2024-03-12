@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { auth, db } from "../../firebase-config";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, where, getDocs, deleteDoc, doc } from "firebase/firestore";
 import { format } from "date-fns";
 import { ArrowUpDown } from "lucide-react";
 
@@ -8,6 +8,20 @@ function ViewWorkouts() {
   const [workouts, setWorkouts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [sortOrder, setSortOrder] = useState("desc"); 
+
+  const deleteWorkout = async (workoutId) => {
+    // Confirm before deleting
+    if (window.confirm("Are you sure you want to delete this workout?")) {
+      try {
+        await deleteDoc(doc(db, "workouts", workoutId));
+        // Remove the deleted workout from the state to update the UI
+        setWorkouts(workouts.filter(workout => workout.id !== workoutId));
+      } catch (error) {
+        console.error("Error deleting workout: ", error);
+        alert("Failed to delete workout.");
+      }
+    }
+  };
 
   useEffect(() => {
     const fetchWorkouts = async () => {
@@ -77,7 +91,7 @@ function ViewWorkouts() {
       </h2>
       <div className="flex justify-end">
         <button
-          className="px-3 py-1 bg-[#C62828] text-white rounded hover:bg-[#B34040] transition-colors"
+          className="px-3 py-1 bg-[#C62828] text-white rounded hover:bg-[#B34040] transition-colors mb-4"
           onClick={toggleSortOrder}
         >
           Sort by Date: {sortOrder === "desc" ? "Oldest First" : "Newest First"}
@@ -85,12 +99,35 @@ function ViewWorkouts() {
         </button>
       </div>
       {sortedWorkouts.length > 0 ? (
-        <ol className="text-sm text-left text-gray-500 dark:text-gray-400 mt-4">
+        <ol className="text-sm text-left text-gray-500 dark:text-gray-400 mt-4 ">
           {sortedWorkouts.map((workout) => (
             <li key={workout.id} className="mb-2">
-              <h3 className="lg:scroll-m-20 text-xl font-semibold tracking-tight text-[#C62828]">
-                {format(workout.date, "MMMM dd, yyyy")} - {workout.bodyPart}
-              </h3>
+              <div className="flex justify-between items-center">
+                <h3 className="lg:scroll-m-20 text-xl font-semibold tracking-tight text-[#C62828]">
+                  {format(workout.date, "MMMM dd, yyyy")} - {workout.bodyPart}
+                </h3>
+                  <button
+                    onClick={() => deleteWorkout(workout.id)}
+                    className="bg-red-500 hover:bg-red-700 text-white font-bold p-1 rounded inline-flex items-center"
+                  >
+                    <svg
+                      class="w-6 h-6 text-white mr-1"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
+                      />
+                    </svg>
+                    Delete Workout
+                  </button>
+              </div>
               {workout.workouts && workout.workouts.length > 0 ? (
                 <ol className="list-decimal divide-y divide-y-8">
                   {workout.workouts.map((exercise, index) => (
