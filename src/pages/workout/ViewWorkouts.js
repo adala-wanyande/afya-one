@@ -104,20 +104,24 @@ function ViewWorkouts() {
         <ol className="text-sm text-left text-gray-500 dark:text-gray-400 mt-4 ">
           {sortedWorkouts.map((workout) => (
             <li key={workout.id} className="mb-2">
-              <div className="flex justify-between items-center">
+              <div className="flex flex-col md:flex-row justify-between items-center">
                 <h3 className="lg:scroll-m-20 text-xl font-semibold tracking-tight text-[#C62828]">
                   {format(workout.date, "MMMM dd, yyyy")} - {workout.bodyPart}
                 </h3>
-                <div>
+                <div className="flex items-center mt-4">
                   <button
                     onClick={() => navigate(`/workout/edit/${workout.id}`)}
-                    className="px-3 py-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2"
+                    className="bg-[#FFD700] hover:bg-[#FFE345] text-white p-3 rounded inline-flex items-center h-10"
                   >
+                    <svg class="w-6 h-6 text-white dark:text-white mr-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                      <path fill-rule="evenodd" d="M11.3 6.2H5a2 2 0 0 0-2 2V19a2 2 0 0 0 2 2h11c1.1 0 2-1 2-2.1V11l-4 4.2c-.3.3-.7.6-1.2.7l-2.7.6c-1.7.3-3.3-1.3-3-3.1l.6-2.9c.1-.5.4-1 .7-1.3l3-3.1Z" clip-rule="evenodd"/>
+                      <path fill-rule="evenodd" d="M19.8 4.3a2.1 2.1 0 0 0-1-1.1 2 2 0 0 0-2.2.4l-.6.6 2.9 3 .5-.6a2.1 2.1 0 0 0 .6-1.5c0-.2 0-.5-.2-.8Zm-2.4 4.4-2.8-3-4.8 5-.1.3-.7 3c0 .3.3.7.6.6l2.7-.6.3-.1 4.7-5Z" clip-rule="evenodd"/>
+                    </svg>
                     Edit
                   </button>
                   <button
                     onClick={() => deleteWorkout(workout.id)}
-                    className="bg-red-500 hover:bg-red-700 text-white font-bold p-1 rounded inline-flex items-center"
+                    className="ml-4 bg-red-500 hover:bg-red-700 text-white p-3 rounded inline-flex items-center h-10"
                   >
                     <svg
                       class="w-6 h-6 text-white mr-1"
