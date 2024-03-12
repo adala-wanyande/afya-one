@@ -9,11 +9,11 @@ import Calendar from 'react-github-contribution-calendar';
 const Dashboard = () => {
   const [firstName, setFirstName] = useState('');
   const [workoutData, setWorkoutData] = useState({});
+  const [isLoading, setIsLoading] = useState(true); // Add loading state
   const navigate = useNavigate();
 
-  // Define custom panel colors here, using different shades of gold if desired
   const panelColors = {
-    0: '#eeeeee', // Assuming you want to keep the default color for days without contributions
+    0: '#eeeeee',
     1: '#FFD700',
     2: '#FFD700',
     3: '#FFD700',
@@ -25,8 +25,6 @@ const Dashboard = () => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         const userId = user.uid;
-        
-        // Fetch user's first name
         const getUserFirstName = async () => {
           const userDocRef = doc(db, 'users', userId);
           const userDocSnap = await getDoc(userDocRef);
@@ -39,11 +37,10 @@ const Dashboard = () => {
           }
         };
 
-        // Fetch user's workouts and prepare data for the calendar
         const fetchWorkouts = async () => {
           const q = query(collection(db, "workouts"), where("userId", "==", userId));
           const querySnapshot = await getDocs(q);
-          const workoutCounts = {}; // { '2024-03-06': 1, '2024-03-07': 2, ... }
+          const workoutCounts = {};
           querySnapshot.forEach((doc) => {
             const { date } = doc.data();
             workoutCounts[date] = (workoutCounts[date] || 0) + 1;
@@ -57,19 +54,24 @@ const Dashboard = () => {
         console.log('User is not signed in.');
         navigate('/signin');
       }
+      setIsLoading(false); // Set loading to false after fetching data
     });
 
     return () => unsubscribe();
   }, [navigate]);
 
-  // Get the latest date in the workoutData to set as 'until' value
   const dates = Object.keys(workoutData);
   const until = dates.length ? dates.reduce((a, b) => (a > b ? a : b)) : new Date().toISOString().split('T')[0];
+
+  // Show loading text if isLoading is true
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>
       <div className='mx-8 lg:mx-36 lg:scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-8'>
-        {firstName ? <h1>Welcome back, {firstName}!</h1> : <div>Loading...</div>}
+        <h1>Welcome back, {firstName}!</h1>
       </div>
       <div className='mx-8 lg:mx-36 mt-4'>
         <h3 className="scroll-m-20 text-xl font-semibold tracking-tight">
@@ -77,12 +79,9 @@ const Dashboard = () => {
         </h3>
       </div>
       <div className='m-8 flex justify-center'>
-        <div className=''>
-          <Calendar values={workoutData} until={until} panelColors={panelColors}/>
-        </div>
+        <Calendar values={workoutData} until={until} panelColors={panelColors}/>
       </div>
     </>
-    
   );
 };
 
