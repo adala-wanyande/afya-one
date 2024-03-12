@@ -47,36 +47,66 @@ const NavBar = () => {
     e.preventDefault(); // Prevent the link default action
     e.stopPropagation(); // Stop click from propagating to other elements
     setWorkoutsDropdownOpen(!workoutsDropdownOpen);
+    setWeightDropdownOpen(false);
+    setNutritionDropdownOpen(false);
+    setSleepDropdownOpen(false);
+    setTimetableDropdownOpen(false);
+    setUserInfoDropdownOpen(false);
   };
 
   const toggleWeightDropdown = (e) => {
     e.preventDefault(); // Prevent the link default action
     e.stopPropagation(); // Stop click from propagating to other elements
     setWeightDropdownOpen(!weightDropdownOpen);
+    setWorkoutsDropdownOpen(false);
+    setNutritionDropdownOpen(false);
+    setSleepDropdownOpen(false);
+    setTimetableDropdownOpen(false);
+    setUserInfoDropdownOpen(false);
   };
 
   const toggleNutritionDropdown = (e) => {
     e.preventDefault(); // Prevent the link default action
     e.stopPropagation(); // Stop click from propagating to other elements
     setNutritionDropdownOpen(!nutritionDropdownOpen);
+    setWorkoutsDropdownOpen(false);
+    setWeightDropdownOpen(false);
+    setSleepDropdownOpen(false);
+    setTimetableDropdownOpen(false);
+    setUserInfoDropdownOpen(false);
   };
 
   const toggleSleepDropdown = (e) => {
     e.preventDefault(); // Prevent the link default action
     e.stopPropagation(); // Stop click from propagating to other elements
     setSleepDropdownOpen(!sleepDropdownOpen);
+    setWorkoutsDropdownOpen(false);
+    setWeightDropdownOpen(false);
+    setNutritionDropdownOpen(false);
+    setTimetableDropdownOpen(false);
+    setUserInfoDropdownOpen(false);
   };
 
   const toggleTimetableDropdown = (e) => {
     e.preventDefault(); // Prevent the link default action
     e.stopPropagation(); // Stop click from propagating to other elements
     setTimetableDropdownOpen(!timetableDropdownOpen);
+    setWorkoutsDropdownOpen(false);
+    setWeightDropdownOpen(false);
+    setNutritionDropdownOpen(false);
+    setSleepDropdownOpen(false);
+    setUserInfoDropdownOpen(false);
   };
 
   const toggleUserInfoDropdown = (e) => {
     e.preventDefault(); // Prevent the link default action
     e.stopPropagation(); // Stop click from propagating to other elements
     setUserInfoDropdownOpen(!userInfoDropdownOpen);
+    setWorkoutsDropdownOpen(false);
+    setWeightDropdownOpen(false);
+    setNutritionDropdownOpen(false);
+    setSleepDropdownOpen(false);
+    setTimetableDropdownOpen(false);
   };
 
   return (
@@ -306,6 +336,7 @@ const NavBar = () => {
               <Link
                 to="/dashboard"
                 className="flex items-center justify-between w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                onClick={toggleNav}
               >
                 Dashboard
               </Link>
