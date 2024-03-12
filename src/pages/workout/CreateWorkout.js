@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { auth, db } from "../../firebase-config";
 import { doc, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import LoadingButton from "../../components/buttons/LoadingButton";
 
 function CreateWorkout() {
   const [date, setDate] = useState("");
@@ -18,6 +19,7 @@ function CreateWorkout() {
     },
   ]);
   const navigate = useNavigate();
+  const [isSubmitting, setIsSubmitting] = useState(false); // State to track form submission status
 
   useEffect(() => {
     const user = auth.currentUser;
@@ -56,6 +58,7 @@ function CreateWorkout() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true); // Begin submission, disable the button
     const user = auth.currentUser;
     if (user) {
       const userId = user.uid;
@@ -70,6 +73,7 @@ function CreateWorkout() {
         navigate("/dashboard/");
       } catch (error) {
         console.error("Error adding workout: ", error);
+        setIsSubmitting(false); // In case of error, re-enable the button
       }
     }
   };
@@ -216,9 +220,17 @@ function CreateWorkout() {
           <button
             type="submit"
             className="mt-5 text-white bg-[#C72929] hover:bg-[B34040] w-80 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            hidden={isSubmitting}
           >
             Submit
           </button>
+          {isSubmitting ? (
+            <>
+              <LoadingButton></LoadingButton>
+            </>
+          ) : (
+            console.log()
+          )}
         </div>
       </form>
     </div>

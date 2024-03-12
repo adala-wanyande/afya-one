@@ -1,34 +1,34 @@
-import React, { useState, useEffect } from 'react';
-import { auth, db } from '../../firebase-config';
-import { doc, getDoc, setDoc } from 'firebase/firestore'; 
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { auth, db } from "../../firebase-config";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
+import LoadingButton from "../../components/buttons/LoadingButton";
 
 function CreateUserInfoForm() {
-  const [fullName, setFullName] = useState('');
-  const [dateOfBirth, setDateOfBirth] = useState('');
-  const [startingWeight, setStartingWeight] = useState('');
-  const [height, setHeight] = useState('');
+  const [fullName, setFullName] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState("");
+  const [startingWeight, setStartingWeight] = useState("");
+  const [height, setHeight] = useState("");
   const navigate = useNavigate();
   const [shouldRenderForm, setShouldRenderForm] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false); // State to track form submission status
 
   useEffect(() => {
     const checkUserInfo = async () => {
       const user = auth.currentUser;
       if (user) {
         const userId = user.uid;
-        const docRef = doc(db, 'users', userId);
+        const docRef = doc(db, "users", userId);
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
-          alert('User information already exists.');
-          navigate('/user/');
+          alert("User information already exists.");
+          navigate("/user/");
         } else {
-          // Only render form if no user information exists
           setShouldRenderForm(true);
         }
       } else {
-        // If not authenticated, redirect to sign-in page
-        navigate('/signin');
+        navigate("/signin");
       }
     };
 
@@ -37,6 +37,7 @@ function CreateUserInfoForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true); // Begin submission, disable the button
 
     const user = auth.currentUser;
     if (user) {
@@ -44,17 +45,17 @@ function CreateUserInfoForm() {
       const userInfo = { fullName, dateOfBirth, startingWeight, height };
 
       try {
-        await setDoc(doc(db, 'users', userId), userInfo);
-        alert('User information saved successfully!');
-        navigate('/user/');
+        await setDoc(doc(db, "users", userId), userInfo);
+        alert("User information saved successfully!");
+        navigate("/user/");
       } catch (error) {
         console.error("Error adding document: ", error);
+        setIsSubmitting(false); // In case of error, re-enable the button
       }
     }
   };
 
   if (!shouldRenderForm) {
-    // Optionally render nothing or a loader
     return null;
   }
 
@@ -87,7 +88,16 @@ function CreateUserInfoForm() {
         placeholder="Height"
         required
       />
-      <button type="submit">Submit</button>
+      <button type="submit" hidden={isSubmitting}>
+        Submit
+      </button>
+      {isSubmitting ? (
+        <>
+          <LoadingButton></LoadingButton>
+        </>
+      ) : (
+        console.log()
+      )}
     </form>
   );
 }
