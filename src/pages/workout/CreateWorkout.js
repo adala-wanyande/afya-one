@@ -79,7 +79,7 @@ function CreateWorkout() {
   };
 
   return (
-    <div className="lg:mx-32 mx-8">
+    <div className="lg:mx-32 mx-8 mb-8">
       <h2 className="lg:scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-8 mb-4">
         Add New Workout
       </h2>

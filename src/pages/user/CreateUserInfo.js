@@ -60,7 +60,7 @@ function CreateUserInfoForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="mb-8">
       <input
         type="text"
         value={fullName}

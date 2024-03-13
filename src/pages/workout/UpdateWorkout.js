@@ -84,7 +84,7 @@ const UpdateWorkout = () => {
 </div>;;
 
   return (
-    <div className="mx-8 lg:mx-32 relative overflow-x-auto sm:rounded-lg bg-white dark:bg-gray-800">
+    <div className="mx-8 lg:mx-32 relative overflow-x-auto sm:rounded-lg bg-white dark:bg-gray-800 mb-8">
       <h2 className="lg:scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-8 mb-4">
         Edit Workout
       </h2>
@@ -98,7 +98,7 @@ const UpdateWorkout = () => {
             <input
               type="date"
               name="date"
-              id="date" // Make sure this matches the htmlFor attribute of the label for accessibility
+              id="date" 
               value={workoutDetails.date}
               onChange={handleInputChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -115,7 +115,7 @@ const UpdateWorkout = () => {
             <input
               type="text"
               name="bodyPart"
-              id="bodyPart" // Make sure this matches the htmlFor attribute of the label for accessibility
+              id="bodyPart" 
               value={workoutDetails.bodyPart}
               onChange={handleInputChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -128,7 +128,6 @@ const UpdateWorkout = () => {
             <h3 className="block mb-2 text-base font-medium text-gray-900 dark:text-white">
               Exercise {index + 1}
             </h3>
-            {/* Repeat the input styling for each workout detail (weight, reps, etc.) similarly */}
             <label
               htmlFor="name"
               className="block mb-2 text-base font-medium text-gray-900 dark:text-white"
@@ -222,7 +221,6 @@ const UpdateWorkout = () => {
               className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
             />
 
-            {/* Input for nextSets */}
             <label
               htmlFor="name"
               className="block mb-2 text-base font-medium text-gray-900 dark:text-white"

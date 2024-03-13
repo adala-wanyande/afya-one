@@ -61,7 +61,7 @@ function ViewUserInfo() {
   };
 
   return (
-    <div>
+    <div className='mb-8'>
       {isLoading ? (
         <div className='flex justify-center mt-32'>
           <div role="status">

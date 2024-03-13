@@ -90,7 +90,7 @@ function UpdateUserInfo() {
   };
 
   return (
-    <div>
+    <div className='mb-8 mx-8'>
       {isLoading ? (
         <div className='flex justify-center mt-32'>
           <div role="status">
@@ -103,7 +103,7 @@ function UpdateUserInfo() {
         </div>
       ) : (
         <>
-        <h2 className='mx-36 lg:scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-8 mb-8'>Update your information</h2>
+        <h2 className='lg:scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-8 mb-4'>Update your information</h2>
         <form class="max-w-sm mx-auto" onSubmit={handleSubmit}>
         <label for="website-admin" class="block mb-4 text-base font-medium text-gray-900 dark:text-white">Your full name</label>
           <div class="flex mb-4" flex flex-col justify-center>
@@ -174,8 +174,8 @@ function UpdateUserInfo() {
               <span class="font-medium">Success alert!</span> Your information has been updated successfully.
             </div>
           )}
-          <div class="flex justify-evenly mt-8">
-            <Button type="submit">Update information</Button>
+          <div class="flex flex-col justify-evenly mt-8">
+            <Button className='mb-4' type="submit">Update information</Button>
             <Button variant="destructive">Delete your information</Button>
           </div>
         </form>
