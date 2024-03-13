@@ -74,7 +74,7 @@ function ViewUserInfo() {
         </div>
       ) : userInfo.dateOfBirth ? (
         <>
-          <div className="mx-64">
+          <div className="mx-8 lg:mx-64">
             <h2 className="lg:scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-8">User Information</h2>
             <Table>
               <TableBody>
@@ -100,8 +100,8 @@ function ViewUserInfo() {
                 </TableRow>
               </TableBody>
             </Table>
-            <div className="flex justify-evenly mt-4 mx-24">
-              <Button onClick={deleteUserInformation}>Delete My Information</Button>
+            <div className="flex flex-col justify-evenly mt-4 lg:mx-24">
+              <Button className="mb-4 bg-red-500" onClick={deleteUserInformation}>Delete My Information</Button>
               <Button onClick={navigateToUpdateUser}>Update My Information</Button>
             </div>
           </div>
