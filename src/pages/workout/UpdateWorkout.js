@@ -92,7 +92,7 @@ const UpdateWorkout = () => {
         <div className="mb-5">
           <label
             htmlFor="date"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            className="block mb-2 text-base font-medium text-gray-900 dark:text-white"
           >
             Date:
             <input
@@ -101,7 +101,7 @@ const UpdateWorkout = () => {
               id="date" // Make sure this matches the htmlFor attribute of the label for accessibility
               value={workoutDetails.date}
               onChange={handleInputChange}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               required
             />
           </label>
@@ -109,7 +109,7 @@ const UpdateWorkout = () => {
         <div className="mb-5">
           <label
             htmlFor="bodyPart"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            className="block mb-2 text-base font-medium text-gray-900 dark:text-white"
           >
             Body Part:
             <input
@@ -118,20 +118,20 @@ const UpdateWorkout = () => {
               id="bodyPart" // Make sure this matches the htmlFor attribute of the label for accessibility
               value={workoutDetails.bodyPart}
               onChange={handleInputChange}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               required
             />
           </label>
         </div>
         {workoutDetails.workouts.map((workout, index) => (
           <div key={index} className="mb-5">
-            <h3 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            <h3 className="block mb-2 text-base font-medium text-gray-900 dark:text-white">
               Exercise {index + 1}
             </h3>
             {/* Repeat the input styling for each workout detail (weight, reps, etc.) similarly */}
             <label
               htmlFor="name"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              className="block mb-2 text-base font-medium text-gray-900 dark:text-white"
             >
               Exercise Name:{" "}
             </label>
@@ -142,11 +142,11 @@ const UpdateWorkout = () => {
               placeholder="Workout Name"
               value={workout.name}
               onChange={(e) => handleInputChange(e, index, "name")}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
             />
             <label
               htmlFor="weight"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              className="block mb-2 text-base font-medium text-gray-900 dark:text-white"
             >
               Weight:{" "}
             </label>
@@ -157,11 +157,11 @@ const UpdateWorkout = () => {
               placeholder="Weight"
               value={workout.weight}
               onChange={(e) => handleInputChange(e, index, "weight")}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
             />
             <label
               htmlFor="reps"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              className="block mb-2 text-base font-medium text-gray-900 dark:text-white"
             >
               Reps:{" "}
             </label>
@@ -172,11 +172,11 @@ const UpdateWorkout = () => {
               placeholder="Reps"
               value={workout.reps}
               onChange={(e) => handleInputChange(e, index, "reps")}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
             />
             <label
               htmlFor="sets"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              className="block mb-2 text-base font-medium text-gray-900 dark:text-white"
             >
               Sets:{" "}
             </label>
@@ -187,12 +187,12 @@ const UpdateWorkout = () => {
               placeholder="Sets"
               value={workout.sets}
               onChange={(e) => handleInputChange(e, index, "sets")}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
             />
 
             <label
               htmlFor="name"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              className="block mb-2 text-base font-medium text-gray-900 dark:text-white"
             >
               Next Target Weight:{" "}
             </label>
@@ -203,12 +203,12 @@ const UpdateWorkout = () => {
               placeholder="Next Weight (lbs/kg)"
               value={workout.nextWeight}
               onChange={(e) => handleInputChange(e, index, "nextWeight")}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
             />
 
             <label
               htmlFor="name"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              className="block mb-2 text-base font-medium text-gray-900 dark:text-white"
             >
               Next Target Reps:{" "}
             </label>
@@ -219,13 +219,13 @@ const UpdateWorkout = () => {
               placeholder="Next Reps"
               value={workout.nextReps}
               onChange={(e) => handleInputChange(e, index, "nextReps")}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
             />
 
             {/* Input for nextSets */}
             <label
               htmlFor="name"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              className="block mb-2 text-base font-medium text-gray-900 dark:text-white"
             >
               Next Target Sets:{" "}
             </label>
@@ -236,7 +236,7 @@ const UpdateWorkout = () => {
               placeholder="Next Sets"
               value={workout.nextSets}
               onChange={(e) => handleInputChange(e, index, "nextSets")}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
             />
 
             {/* Optionally, you could add a button to remove a workout, styled similarly to your template */}
@@ -245,7 +245,7 @@ const UpdateWorkout = () => {
         <div className="flex justify-center">
           <button
             type="submit"
-            className="mt-5 text-white bg-[#C72929] hover:bg-[#B34040] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            className="mt-5 text-white bg-[#C72929] hover:bg-[#B34040] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
             Save Changes
           </button>
