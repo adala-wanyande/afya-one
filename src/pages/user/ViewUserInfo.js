@@ -103,7 +103,7 @@ function ViewUserInfo() {
                 </TableRow>
               </TableBody>
             </Table>
-            <div className="flex flex-col justify-evenly mt-4 lg:mx-24">
+            <div className="flex flex-col lg:flex-row justify-evenly mt-4 lg:mx-24 ">
               <Button className="mb-4 bg-red-500" onClick={deleteUserInformation}>Delete My Information</Button>
               <Button onClick={navigateToUpdateUser}>Update My Information</Button>
             </div>
