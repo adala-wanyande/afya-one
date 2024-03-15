@@ -10,6 +10,7 @@ import {
 } from "../../components/ui/table";
 import { Button } from "../../components/ui/button";
 import { format, parseISO, differenceInYears, differenceInMonths, differenceInDays } from 'date-fns';
+import NavBar from '../../components/navigation/NavBar';
 
 function ViewUserInfo() {
   const [userInfo, setUserInfo] = useState({});
@@ -61,6 +62,8 @@ function ViewUserInfo() {
   };
 
   return (
+    <>
+    <NavBar></NavBar>
     <div className='mb-8'>
       {isLoading ? (
         <div className='flex justify-center mt-32'>
@@ -108,6 +111,7 @@ function ViewUserInfo() {
         </>
       ) : null}
     </div>
+    </>
   );
 }
 

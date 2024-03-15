@@ -1,15 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { auth, db } from "../../firebase-config";
-import { useNavigate } from 'react-router-dom';
-import { collection, query, where, getDocs, deleteDoc, doc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
 import { format } from "date-fns";
 import { ArrowUpDown } from "lucide-react";
+import NavBar from "../../components/navigation/NavBar";
 
 function ViewWorkouts() {
   const [workouts, setWorkouts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [sortOrder, setSortOrder] = useState("desc");
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const deleteWorkout = async (workoutId) => {
     // Confirm before deleting
@@ -17,7 +25,7 @@ function ViewWorkouts() {
       try {
         await deleteDoc(doc(db, "workouts", workoutId));
         // Remove the deleted workout from the state to update the UI
-        setWorkouts(workouts.filter(workout => workout.id !== workoutId));
+        setWorkouts(workouts.filter((workout) => workout.id !== workoutId));
       } catch (error) {
         console.error("Error deleting workout: ", error);
         alert("Failed to delete workout.");
@@ -31,7 +39,7 @@ function ViewWorkouts() {
       if (user) {
         const workoutsQuery = query(
           collection(db, "workouts"),
-          where("userId", "==", user.uid),
+          where("userId", "==", user.uid)
         );
         const querySnapshot = await getDocs(workoutsQuery);
         const fetchedWorkouts = querySnapshot.docs.map((doc) => ({
@@ -54,9 +62,9 @@ function ViewWorkouts() {
 
   const sortedWorkouts = workouts.sort((a, b) => {
     if (sortOrder === "desc") {
-      return b.date - a.date; 
+      return b.date - a.date;
     } else {
-      return a.date - b.date; 
+      return a.date - b.date;
     }
   });
 
@@ -87,98 +95,116 @@ function ViewWorkouts() {
   }
 
   return (
-    <div className="mx-8 lg:mx-32 relative overflow-x-auto sm:rounded-lg bg-white dark:bg-gray-800">
-      <h2 className="lg:scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-8 mb-4">
-        Your Workouts
-      </h2>
-      <div className="flex justify-end">
-        <button
-          className="px-3 py-1 bg-[#C62828] text-white rounded hover:bg-[#B34040] transition-colors mb-4"
-          onClick={toggleSortOrder}
-        >
-          Sort by Date: {sortOrder === "desc" ? "Oldest First" : "Newest First"}
-          <ArrowUpDown className="inline-block ml-2 h-4 w-4" />
-        </button>
-      </div>
-      {sortedWorkouts.length > 0 ? (
-        <ol className="text-sm text-left text-gray-500 dark:text-gray-400 mt-4 ">
-          {sortedWorkouts.map((workout) => (
-            <li key={workout.id} className="mb-2">
-              <div className="flex flex-col md:flex-row justify-between items-center">
-                <h3 className="lg:scroll-m-20 text-xl font-semibold tracking-tight text-[#C62828]">
-                  {format(workout.date, "MMMM dd, yyyy")} - {workout.bodyPart}
-                </h3>
-                <div className="flex items-center mt-4">
-                  <button
-                    onClick={() => navigate(`/workout/edit/${workout.id}`)}
-                    className="bg-[#FFD700] hover:bg-[#FFE345] text-white p-3 rounded inline-flex items-center h-10"
-                  >
-                    <svg class="w-6 h-6 text-white dark:text-white mr-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-                      <path fill-rule="evenodd" d="M11.3 6.2H5a2 2 0 0 0-2 2V19a2 2 0 0 0 2 2h11c1.1 0 2-1 2-2.1V11l-4 4.2c-.3.3-.7.6-1.2.7l-2.7.6c-1.7.3-3.3-1.3-3-3.1l.6-2.9c.1-.5.4-1 .7-1.3l3-3.1Z" clip-rule="evenodd"/>
-                      <path fill-rule="evenodd" d="M19.8 4.3a2.1 2.1 0 0 0-1-1.1 2 2 0 0 0-2.2.4l-.6.6 2.9 3 .5-.6a2.1 2.1 0 0 0 .6-1.5c0-.2 0-.5-.2-.8Zm-2.4 4.4-2.8-3-4.8 5-.1.3-.7 3c0 .3.3.7.6.6l2.7-.6.3-.1 4.7-5Z" clip-rule="evenodd"/>
-                    </svg>
-                    Edit Workout
-                  </button>
-                  <button
-                    onClick={() => deleteWorkout(workout.id)}
-                    className="ml-4 bg-red-500 hover:bg-red-700 text-white p-3 rounded inline-flex items-center h-10"
-                  >
-                    <svg
-                      class="w-6 h-6 text-white mr-1"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
+    <>
+      <NavBar></NavBar>
+      <div className="mx-8 lg:mx-32 relative overflow-x-auto sm:rounded-lg bg-white dark:bg-gray-800">
+        <h2 className="lg:scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-8 mb-4">
+          Your Workouts
+        </h2>
+        <div className="flex justify-end">
+          <button
+            className="px-3 py-1 bg-[#C62828] text-white rounded hover:bg-[#B34040] transition-colors mb-4"
+            onClick={toggleSortOrder}
+          >
+            Sort by Date:{" "}
+            {sortOrder === "desc" ? "Oldest First" : "Newest First"}
+            <ArrowUpDown className="inline-block ml-2 h-4 w-4" />
+          </button>
+        </div>
+        {sortedWorkouts.length > 0 ? (
+          <ol className="text-sm text-left text-gray-500 dark:text-gray-400 mt-4 ">
+            {sortedWorkouts.map((workout) => (
+              <li key={workout.id} className="mb-2">
+                <div className="flex flex-col md:flex-row justify-between items-center">
+                  <h3 className="lg:scroll-m-20 text-xl font-semibold tracking-tight text-[#C62828]">
+                    {format(workout.date, "MMMM dd, yyyy")} - {workout.bodyPart}
+                  </h3>
+                  <div className="flex items-center mt-4">
+                    <button
+                      onClick={() => navigate(`/workout/edit/${workout.id}`)}
+                      className="bg-[#FFD700] hover:bg-[#FFE345] text-white p-3 rounded inline-flex items-center h-10"
                     >
-                      <path
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
-                      />
-                    </svg>
-                    Delete Workout
-                  </button>
+                      <svg
+                        class="w-6 h-6 text-white dark:text-white mr-1"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M11.3 6.2H5a2 2 0 0 0-2 2V19a2 2 0 0 0 2 2h11c1.1 0 2-1 2-2.1V11l-4 4.2c-.3.3-.7.6-1.2.7l-2.7.6c-1.7.3-3.3-1.3-3-3.1l.6-2.9c.1-.5.4-1 .7-1.3l3-3.1Z"
+                          clip-rule="evenodd"
+                        />
+                        <path
+                          fill-rule="evenodd"
+                          d="M19.8 4.3a2.1 2.1 0 0 0-1-1.1 2 2 0 0 0-2.2.4l-.6.6 2.9 3 .5-.6a2.1 2.1 0 0 0 .6-1.5c0-.2 0-.5-.2-.8Zm-2.4 4.4-2.8-3-4.8 5-.1.3-.7 3c0 .3.3.7.6.6l2.7-.6.3-.1 4.7-5Z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                      Edit Workout
+                    </button>
+                    <button
+                      onClick={() => deleteWorkout(workout.id)}
+                      className="ml-4 bg-red-500 hover:bg-red-700 text-white p-3 rounded inline-flex items-center h-10"
+                    >
+                      <svg
+                        class="w-6 h-6 text-white mr-1"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke="currentColor"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
+                        />
+                      </svg>
+                      Delete Workout
+                    </button>
+                  </div>
                 </div>
-              </div>
-              {workout.workouts && workout.workouts.length > 0 ? (
-                <ol className="list-decimal divide-y divide-y-8">
-                  {workout.workouts.map((exercise, index) => (
-                    <li
-                      key={index}
-                      className="py-4 flex flex-col divide-y divide-y-1"
-                    >
-                      <p className="py-1 font-medium text-gray-900 dark:text-white text-[#F08080]">
-                        {exercise.name}
-                      </p>
-                      <p className="py-1">Weight: {exercise.weight} kg</p>
-                      <p className="py-1">Reps: {exercise.reps} reps</p>
-                      <p className="py-1">Sets: {exercise.sets} sets</p>
-                      <p className="py-1">
-                        Next Target Weight: {exercise.nextWeight} kg
-                      </p>
-                      <p className="py-1">
-                        Next Target Reps: {exercise.nextReps} reps
-                      </p>
-                      <p className="py-1">
-                        Next Target Sets: {exercise.nextSets} sets
-                      </p>
-                    </li>
-                  ))}
-                </ol>
-              ) : (
-                <p className="text-gray-500 dark:text-gray-400">
-                  No exercises found for this workout.
-                </p>
-              )}
-            </li>
-          ))}
-        </ol>
-      ) : (
-        <p className="text-gray-500 dark:text-gray-400">No workouts found.</p>
-      )}
-    </div>
+                {workout.workouts && workout.workouts.length > 0 ? (
+                  <ol className="list-decimal divide-y divide-y-8">
+                    {workout.workouts.map((exercise, index) => (
+                      <li
+                        key={index}
+                        className="py-4 flex flex-col divide-y divide-y-1"
+                      >
+                        <p className="py-1 font-medium text-gray-900 dark:text-white text-[#F08080]">
+                          {exercise.name}
+                        </p>
+                        <p className="py-1">Weight: {exercise.weight} kg</p>
+                        <p className="py-1">Reps: {exercise.reps} reps</p>
+                        <p className="py-1">Sets: {exercise.sets} sets</p>
+                        <p className="py-1">
+                          Next Target Weight: {exercise.nextWeight} kg
+                        </p>
+                        <p className="py-1">
+                          Next Target Reps: {exercise.nextReps} reps
+                        </p>
+                        <p className="py-1">
+                          Next Target Sets: {exercise.nextSets} sets
+                        </p>
+                      </li>
+                    ))}
+                  </ol>
+                ) : (
+                  <p className="text-gray-500 dark:text-gray-400">
+                    No exercises found for this workout.
+                  </p>
+                )}
+              </li>
+            ))}
+          </ol>
+        ) : (
+          <p className="text-gray-500 dark:text-gray-400">No workouts found.</p>
+        )}
+      </div>
+    </>
   );
 }
 

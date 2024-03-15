@@ -4,6 +4,7 @@ import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import { DatePicker } from '../../components/forms/DatePicker';
 import { Button } from "../../components/ui/button";
+import NavBar from '../../components/navigation/NavBar';
 
 function UpdateUserInfo() {
   const [userInfo, setUserInfo] = useState({
@@ -90,6 +91,8 @@ function UpdateUserInfo() {
   };
 
   return (
+    <>
+    <NavBar></NavBar>
     <div className='mb-8 mx-8'>
       {isLoading ? (
         <div className='flex justify-center mt-32'>
@@ -182,6 +185,7 @@ function UpdateUserInfo() {
         </>
       )}
     </div>
+    </>
   );
 }
 
