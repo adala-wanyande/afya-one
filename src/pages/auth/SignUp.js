@@ -43,8 +43,8 @@ function SignUpForm() {
   };
 
   return (
-    <div class="h-screen flex items-center justify-center">
-      <form onSubmit={handleSubmit} class="rounded-xl border bg-card text-card-foreground shadow">
+    <div class="flex justify-center mt-16">
+      <form onSubmit={handleSubmit} class="rounded-xl border bg-card text-card-foreground shadow w-[340px]">
         <div class="grid justify-items-end">
           <Link class="justify-center whitespace-nowrap rounded-md text-base font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2 m-2" to="/signin">Login</Link>
         </div>
