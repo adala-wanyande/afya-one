@@ -58,20 +58,32 @@ function ViewUserInfo() {
   };
 
   // Function to calculate age
+  // Function to calculate age
   const calculateAge = (dateOfBirth) => {
     const birthDate = parseISO(dateOfBirth); // Assuming dateOfBirth is in ISO format
     const today = new Date();
     const years = differenceInYears(today, birthDate);
-    const months = differenceInMonths(today, birthDate) % 12;
-    const days =
-      differenceInDays(
-        today,
-        new Date(
-          today.getFullYear(),
-          today.getMonth() - months,
-          birthDate.getDate()
-        )
-      ) % 30;
+    const totalMonths = differenceInMonths(today, birthDate);
+    const months = totalMonths % 12;
+    const daysDifference = differenceInDays(today, birthDate);
+    const daysInYearAndMonth = years * 365 + months * 30; // Approximation, considering an average month length of 30 days
+    let days = daysDifference - daysInYearAndMonth;
+    days = days % 30; // Adjusting in case the days exceed the average month length
+
+    // Adjust for edge cases where day calculation might still be negative due to the approximation
+    if (days < 0) {
+      days += 30; // Correcting the negative days by adding a month's average days
+      if (months === 0) {
+        // If no months, subtract from years
+        if (years > 0) {
+          years -= 1;
+          months = 11; // Adjusting months to 11 since a year was subtracted
+        }
+      } else {
+        months -= 1; // Subtract one month to balance the days added
+      }
+    }
+
     return `${years} years, ${months} months, ${days} days`;
   };
 
