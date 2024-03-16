@@ -88,6 +88,7 @@ function CreateUserInfoForm() {
               When were you born?
             </label>
             <input
+              class="w-[160px] flex h-9 rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
               type="date"
               name="dateOfBirth"
               value={dateOfBirth}

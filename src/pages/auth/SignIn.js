@@ -65,7 +65,7 @@ function SignInForm() {
                 onChange={(e) => setPassword(e.target.value)} />
               {passwordError && <ErrorAlert>{passwordError}</ErrorAlert>}
             </div>
-            <div className="grid gap-2 max-w-60">
+            <div className="grid gap-2">
               {error && <ErrorAlert>{error}</ErrorAlert>}
             </div>
         </div>
