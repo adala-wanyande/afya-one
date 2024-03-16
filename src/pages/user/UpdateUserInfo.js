@@ -128,9 +128,9 @@ function UpdateUserInfo() {
                 for="website-admin"
                 class="block mb-4 text-base font-medium text-gray-900 dark:text-white"
               >
-                Your full name
+                Your full name:
               </label>
-              <div class="flex mb-4" flex flex-col justify-center>
+              <div class="flex mb-4">
                 <span class="inline-flex items-center px-3 text-base text-gray-900 bg-gray-200 border border-e-0 border-gray-300 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
                   <svg
                     class="w-4 h-4 text-gray-500 dark:text-gray-400"
@@ -289,6 +289,7 @@ function UpdateUserInfo() {
               </label>
               <div class="flex justify-center">
                 <input
+                  class="w-[160px] rounded-none rounded-e-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block text-base p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   type="date"
                   name="dateOfBirth"
                   value={userInfo.dateOfBirth}
@@ -304,7 +305,7 @@ function UpdateUserInfo() {
                   information has been updated successfully.
                 </div>
               )}
-              <div class="flex flex-col justify-evenly mt-8">
+              <div class="flex flex-col lg:flex-row justify-evenly mt-8">
                 <Button className="mb-4" type="submit">
                   Update information
                 </Button>
