@@ -55,7 +55,7 @@ function UpdateUserInfo() {
       });
       setShowSuccessAlert(true); // Show the success alert
       setTimeout(() => setShowSuccessAlert(false), 4000); // Hide the alert after 5 seconds
-      navigate('/user/'); // Consider navigating after showing the alert or based on user action
+      navigate('/dashboard/'); // Consider navigating after showing the alert or based on user action
     }
   };
 

@@ -48,7 +48,7 @@ function CreateUserInfoForm() {
       try {
         await setDoc(doc(db, "users", userId), userInfo);
         alert("User information saved successfully!");
-        navigate("/user/");
+        navigate("/dashboard/");
       } catch (error) {
         console.error("Error adding document: ", error);
         setIsSubmitting(false); // In case of error, re-enable the button
