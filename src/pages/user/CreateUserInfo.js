@@ -87,7 +87,8 @@ function CreateUserInfoForm() {
             <label class="text-sm font-medium leading-none" for="dateOfBirth">
               When were you born?
             </label>
-            <DatePicker
+            <input
+              type="date"
               name="dateOfBirth"
               value={dateOfBirth}
               onChange={(e) => setDateOfBirth(e.target.value)}

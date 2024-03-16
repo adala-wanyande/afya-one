@@ -166,7 +166,8 @@ function UpdateUserInfo() {
           </div>
           <label for="counter-input" class="block mb-1 text-base font-medium text-gray-900 dark:text-white">Choose your date of birth:</label>
           <div class='flex justify-center'>
-          <DatePicker
+          <input
+            type="date"
             name="dateOfBirth"
             value={userInfo.dateOfBirth}
             onChange={handleChange}
