@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import { auth, db } from "../../firebase-config";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
-import { DatePicker } from '../../components/forms/DatePicker';
-import LoadingButton from "../../components/buttons/LoadingButton";
 
 function CreateUserInfoForm() {
   const [fullName, setFullName] = useState("");
@@ -13,6 +11,7 @@ function CreateUserInfoForm() {
   const navigate = useNavigate();
   const [shouldRenderForm, setShouldRenderForm] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false); // State to track form submission status
+  const [errors, setErrors] = useState({}); // New state for managing input validation errors
 
   useEffect(() => {
     const checkUserInfo = async () => {
@@ -36,9 +35,27 @@ function CreateUserInfoForm() {
     checkUserInfo();
   }, [navigate]);
 
+  const validateForm = () => {
+    let newErrors = {};
+    if (!fullName.trim()) newErrors.fullName = "Name is required.";
+    // Assuming dateOfBirth is in 'YYYY-MM-DD' format for simplicity. Adjust validation as needed.
+    if (!dateOfBirth) newErrors.dateOfBirth = "Date of birth is required.";
+    if (startingWeight <= 0)
+      newErrors.startingWeight = "Starting weight must be greater than zero.";
+    if (height <= 0) newErrors.height = "Height must be greater than zero.";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0; // Returns true if no errors
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true); // Begin submission, disable the button
+
+    if (!validateForm()) {
+      setIsSubmitting(false); // Re-enable the button if validation fails
+      return; // Prevent form submission
+    }
 
     const user = auth.currentUser;
     if (user) {
@@ -67,7 +84,9 @@ function CreateUserInfoForm() {
           <h3 class="font-semibold tracking-tight text-2xl">
             Welcome to Afya One!
           </h3>
-          <p class="text-sm text-muted-foreground">Let's get to know you. Feel free to share. This is a safe space.</p>
+          <p class="text-sm text-muted-foreground">
+            Let's get to know you. Feel free to share. This is a safe space.
+          </p>
         </div>
         <form onSubmit={handleSubmit} class="p-6 pt-0 grid gap-4">
           <div class="grid gap-2">
@@ -82,6 +101,9 @@ function CreateUserInfoForm() {
               onChange={(e) => setFullName(e.target.value)}
               required
             />
+            {errors.fullName && (
+              <div className="text-red-500 text-sm">{errors.fullName}</div>
+            )}
           </div>
           <div class="grid gap-2">
             <label class="text-sm font-medium leading-none" for="dateOfBirth">
@@ -111,6 +133,11 @@ function CreateUserInfoForm() {
               placeholder="Starting Weight"
               required
             />
+            {errors.startingWeight && (
+              <div className="text-red-500 text-sm">
+                {errors.startingWeight}
+              </div>
+            )}
           </div>
           <div class="grid gap-2">
             <label class="text-sm font-medium leading-none" for="height">
@@ -125,6 +152,9 @@ function CreateUserInfoForm() {
               placeholder="Height"
               required
             />
+            {errors.height && (
+              <div className="text-red-500 text-sm">{errors.height}</div>
+            )}
           </div>
           <div class="flex items-center pt-4">
             <button
