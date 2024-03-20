@@ -147,6 +147,22 @@ const NavBar = () => {
                           View previous workouts
                         </Link>
                       </li>
+                      <li class="hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                        <Link
+                          className="pl-2 text-sm leading-tight text-muted-foreground"
+                          to="/split/new"
+                        >
+                          Create new training split
+                        </Link>
+                      </li>
+                      <li class="hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                        <Link
+                          className="pl-2 text-sm leading-tight text-muted-foreground"
+                          to="/split/all"
+                        >
+                          View your training splits
+                        </Link>
+                      </li>
                     </ul>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
@@ -381,6 +397,24 @@ const NavBar = () => {
                         onClick={toggleNav}
                       >
                         View previous workouts
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to="/split/new"
+                        className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                        onClick={toggleNav}
+                      >
+                        Create new training split
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to="/split/all"
+                        className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                        onClick={toggleNav}
+                      >
+                        View your training splits
                       </Link>
                     </li>
                   </ul>
