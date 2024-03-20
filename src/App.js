@@ -19,7 +19,7 @@ import ViewWorkouts from "./pages/workout/ViewWorkouts";
 import UpdateWorkout from "./pages/workout/UpdateWorkout";
 import CreateTrainingSplit from "./pages/training/CreateTrainingSplit";
 import UpdateTrainingSplit from "./pages/training/UpdateTrainingSplit";
-import ViewTrainingSplits from "./pages/training/ViewTrainingSplit";
+import ViewTrainingSplits from "./pages/training/ViewTrainingSplits";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
