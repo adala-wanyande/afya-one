@@ -17,7 +17,9 @@ import Dashboard from "./pages/dashboard/Dashboard";
 import CreateWorkout from "./pages/workout/CreateWorkout";
 import ViewWorkouts from "./pages/workout/ViewWorkouts";
 import UpdateWorkout from "./pages/workout/UpdateWorkout";
-import CreateTrainingSplit from "./pages/template/CreateTrainingSplit";
+import CreateTrainingSplit from "./pages/training/CreateTrainingSplit";
+import UpdateTrainingSplit from "./pages/training/UpdateTrainingSplit";
+import ViewTrainingSplits from "./pages/training/ViewTrainingSplit";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -124,7 +126,31 @@ const App = () => {
           <Route
             path="/split/new"
             element={
-              isAuthenticated ? <CreateTrainingSplit /> : <Navigate to="/signin" />
+              isAuthenticated ? (
+                <CreateTrainingSplit />
+              ) : (
+                <Navigate to="/signin" />
+              )
+            }
+          />
+          <Route
+            path="/split/edit/:id"
+            element={
+              isAuthenticated ? (
+                <UpdateTrainingSplit />
+              ) : (
+                <Navigate to="/signin" />
+              )
+            }
+          />
+          <Route
+            path="/split/all"
+            element={
+              isAuthenticated ? (
+                <ViewTrainingSplits />
+              ) : (
+                <Navigate to="/signin" />
+              )
             }
           />
           {/* Redirect users to the sign-in page by default if they access the root path */}
