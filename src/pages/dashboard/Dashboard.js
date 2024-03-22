@@ -1,4 +1,4 @@
-import 'chartjs-adapter-date-fns';
+import "chartjs-adapter-date-fns";
 import React, { useEffect, useState } from "react";
 import { db, auth } from "../../firebase-config";
 import { collection, query, where, getDocs } from "firebase/firestore";
@@ -9,7 +9,7 @@ import Calendar from "react-github-contribution-calendar";
 import NavBar from "../../components/navigation/NavBar";
 
 // Import Chart.js components
-import { Line } from 'react-chartjs-2';
+import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -20,8 +20,8 @@ import {
   Tooltip,
   Legend,
   TimeScale,
-  TimeSeriesScale
-} from 'chart.js';
+  TimeSeriesScale,
+} from "chart.js";
 
 // ChartJS registration
 ChartJS.register(
@@ -68,7 +68,10 @@ const Dashboard = () => {
           }
 
           // Fetch workouts
-          const qWorkouts = query(collection(db, "workouts"), where("userId", "==", userId));
+          const qWorkouts = query(
+            collection(db, "workouts"),
+            where("userId", "==", userId)
+          );
           const querySnapshotWorkouts = await getDocs(qWorkouts);
           const workoutCounts = {};
           querySnapshotWorkouts.forEach((doc) => {
@@ -77,20 +80,23 @@ const Dashboard = () => {
           });
           setWorkoutData(workoutCounts);
 
-          const qWeights = query(collection(db, "weights"), where("userId", "==", user.uid));
-      const querySnapshotWeights = await getDocs(qWeights);
-      const dates = [];
-      const weights = [];
-      querySnapshotWeights.forEach((doc) => {
-        const data = doc.data();
-        // Convert Firestore Timestamp to JavaScript Date object
-        const date = data.date.toDate();
-        // Optionally convert to string for easier handling, e.g., date.toISOString().split('T')[0]
-        dates.push(date);
-        weights.push(data.weight);
-      });
-      setWeightsData({ labels: dates, data: weights });
-            } catch (error) {
+          const qWeights = query(
+            collection(db, "weights"),
+            where("userId", "==", user.uid)
+          );
+          const querySnapshotWeights = await getDocs(qWeights);
+          const dates = [];
+          const weights = [];
+          querySnapshotWeights.forEach((doc) => {
+            const data = doc.data();
+            // Convert Firestore Timestamp to JavaScript Date object
+            const date = data.date.toDate();
+            // Optionally convert to string for easier handling, e.g., date.toISOString().split('T')[0]
+            dates.push(date);
+            weights.push(data.weight);
+          });
+          setWeightsData({ labels: dates, data: weights });
+        } catch (error) {
           console.error("Error fetching data: ", error);
         } finally {
           setIsLoading(false); // Ensure isLoading is set to false here to handle both success and failure
@@ -103,54 +109,58 @@ const Dashboard = () => {
 
     return () => unsubscribe();
   }, [navigate]);
-  
+
   const today = new Date().toISOString().split("T")[0];
 
   const weightChartData = {
     labels: weightsData.labels,
     datasets: [
       {
-        label: 'Weight over Time',
-        data: weightsData.labels.map((label, index) => ({ x: label, y: weightsData.data[index] })),
-        fill: true,
-        borderColor: 'rgb(75, 192, 192)',
-        backgroundColor: '#C72929', // Simple fill color
-        tension: 0.1
-      }
+        fill: "origin", // Fill to the x-axis
+        label: "Weight over Time",
+        data: weightsData.labels.map((label, index) => ({
+          x: label,
+          y: weightsData.data[index],
+        })),
+        borderColor: "#FFD700",
+        backgroundColor: "#FFD700 ", // Consider adjusting opacity if needed
+        tension: 0.1,
+      },
     ],
   };
 
   const weightChartOptions = {
+    responsive: true,
     scales: {
       x: {
-        type: 'time',
+        type: "time",
         time: {
-          unit: 'month',
-          tooltipFormat: 'MMMM DD, YYYY'
+          unit: "month",
+          tooltipFormat: "MMMM DD, YYYY",
         },
         title: {
           display: true,
-          text: 'Date'
-        }
+          text: "Date",
+        },
       },
       y: {
-        beginAtZero: true,
+        beginAtZero: false,
         title: {
           display: true,
-          text: 'Weight (kg)'
-        }
-      }
+          text: "Weight (kg)",
+        },
+      },
     },
     plugins: {
       legend: {
-        display: true,
-        position: 'top',
+        display: false,
+        position: "top",
       },
       title: {
         display: false,
-        text: 'Weight Tracking'
+        text: "Weight Tracking",
       },
-    }
+    },
   };
 
   if (isLoading) {
@@ -198,9 +208,11 @@ const Dashboard = () => {
         />
       </div>
       <div className="mx-8 lg:mx-36 mt-8">
-        <h3 className="scroll-m-20 text-xl font-semibold tracking-tight">Your Weight Progress</h3>
-        <div className='max-w-[800px] mx-8'>
-          <Line data={weightChartData} options={weightChartOptions} />
+        <h3 className="scroll-m-20 text-xl font-semibold tracking-tight">
+          Your Weight Progress
+        </h3>
+        <div className="max-w-[800px] mx-8">
+          <Line options={weightChartOptions} data={weightChartData} />
         </div>
       </div>
     </>
