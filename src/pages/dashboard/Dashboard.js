@@ -1,3 +1,4 @@
+import 'chartjs-adapter-date-fns';
 import React, { useEffect, useState } from "react";
 import { db, auth } from "../../firebase-config";
 import { collection, query, where, getDocs } from "firebase/firestore";
@@ -7,9 +8,38 @@ import { useNavigate } from "react-router-dom";
 import Calendar from "react-github-contribution-calendar";
 import NavBar from "../../components/navigation/NavBar";
 
+// Import Chart.js components
+import { Line } from 'react-chartjs-2';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  TimeScale,
+  TimeSeriesScale
+} from 'chart.js';
+
+// ChartJS registration
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  TimeScale,
+  TimeSeriesScale,
+  Title,
+  Tooltip,
+  Legend
+);
+
 const Dashboard = () => {
   const [firstName, setFirstName] = useState("");
   const [workoutData, setWorkoutData] = useState({});
+  const [weightsData, setWeightsData] = useState({ labels: [], data: [] });
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -37,15 +67,30 @@ const Dashboard = () => {
             console.log("No such document!");
           }
 
-          const q = query(collection(db, "workouts"), where("userId", "==", userId));
-          const querySnapshot = await getDocs(q);
+          // Fetch workouts
+          const qWorkouts = query(collection(db, "workouts"), where("userId", "==", userId));
+          const querySnapshotWorkouts = await getDocs(qWorkouts);
           const workoutCounts = {};
-          querySnapshot.forEach((doc) => {
+          querySnapshotWorkouts.forEach((doc) => {
             const { date } = doc.data();
             workoutCounts[date] = (workoutCounts[date] || 0) + 1;
           });
           setWorkoutData(workoutCounts);
-        } catch (error) {
+
+          const qWeights = query(collection(db, "weights"), where("userId", "==", user.uid));
+      const querySnapshotWeights = await getDocs(qWeights);
+      const dates = [];
+      const weights = [];
+      querySnapshotWeights.forEach((doc) => {
+        const data = doc.data();
+        // Convert Firestore Timestamp to JavaScript Date object
+        const date = data.date.toDate();
+        // Optionally convert to string for easier handling, e.g., date.toISOString().split('T')[0]
+        dates.push(date);
+        weights.push(data.weight);
+      });
+      setWeightsData({ labels: dates, data: weights });
+            } catch (error) {
           console.error("Error fetching data: ", error);
         } finally {
           setIsLoading(false); // Ensure isLoading is set to false here to handle both success and failure
@@ -60,6 +105,53 @@ const Dashboard = () => {
   }, [navigate]);
   
   const today = new Date().toISOString().split("T")[0];
+
+  const weightChartData = {
+    labels: weightsData.labels,
+    datasets: [
+      {
+        label: 'Weight over Time',
+        data: weightsData.labels.map((label, index) => ({ x: label, y: weightsData.data[index] })),
+        fill: true,
+        borderColor: 'rgb(75, 192, 192)',
+        backgroundColor: '#C72929', // Simple fill color
+        tension: 0.1
+      }
+    ],
+  };
+
+  const weightChartOptions = {
+    scales: {
+      x: {
+        type: 'time',
+        time: {
+          unit: 'month',
+          tooltipFormat: 'MMMM DD, YYYY'
+        },
+        title: {
+          display: true,
+          text: 'Date'
+        }
+      },
+      y: {
+        beginAtZero: true,
+        title: {
+          display: true,
+          text: 'Weight (kg)'
+        }
+      }
+    },
+    plugins: {
+      legend: {
+        display: true,
+        position: 'top',
+      },
+      title: {
+        display: false,
+        text: 'Weight Tracking'
+      },
+    }
+  };
 
   if (isLoading) {
     return (
@@ -98,12 +190,18 @@ const Dashboard = () => {
           Your Workout Contribution Graph
         </h3>
       </div>
-      <div className="mx-8 lg:mx-36 mt-4 flex justify-center">
+      <div className="mx-8 lg:mx-36 mt-4 flex justify-center max-w-[800px]">
         <Calendar
           values={workoutData}
           until={today}
           panelColors={panelColors}
         />
+      </div>
+      <div className="mx-8 lg:mx-36 mt-8">
+        <h3 className="scroll-m-20 text-xl font-semibold tracking-tight">Your Weight Progress</h3>
+        <div className='max-w-[800px] mx-8'>
+          <Line data={weightChartData} options={weightChartOptions} />
+        </div>
       </div>
     </>
   );
