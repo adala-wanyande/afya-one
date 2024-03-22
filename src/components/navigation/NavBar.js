@@ -450,7 +450,7 @@ const NavBar = () => {
                   <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
                     <li>
                       <Link
-                        to="weight/new"
+                        to="/weight/new"
                         className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                         onClick={toggleNav}
                       >
@@ -459,7 +459,7 @@ const NavBar = () => {
                     </li>
                     <li>
                       <Link
-                        to="weight/all"
+                        to="/weight/all"
                         className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                         onClick={toggleNav}
                       >
