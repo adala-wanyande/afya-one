@@ -23,6 +23,7 @@ import ViewTrainingSplits from "./pages/training/ViewTrainingSplits";
 import CreateWeight from "./pages/weight/CreateWeight";
 import ViewWeights from "./pages/weight/ViewWeights";
 import CreateNutritionEntry from "./pages/nutrition/CreateNutrition";
+import ViewNutrition from "./pages/nutrition/ViewNutrition";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -172,6 +173,12 @@ const App = () => {
             path="/nutrition/new"
             element={
               isAuthenticated ? <CreateNutritionEntry/> : <Navigate to="/signin" />
+            }
+          />
+          <Route
+            path="/nutrition/all"
+            element={
+              isAuthenticated ? <ViewNutrition/> : <Navigate to="/signin" />
             }
           />
           {/* Redirect users to the sign-in page by default if they access the root path */}
