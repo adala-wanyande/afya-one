@@ -40,6 +40,7 @@ const Dashboard = () => {
   const [firstName, setFirstName] = useState("");
   const [workoutData, setWorkoutData] = useState({});
   const [weightsData, setWeightsData] = useState({ labels: [], data: [] });
+  const [nutritionData, setNutritionData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -66,6 +67,19 @@ const Dashboard = () => {
           } else {
             console.log("No such document!");
           }
+
+          // Fetch nutrition data
+          const qNutrition = query(
+            collection(db, "nutrition"),
+            where("userId", "==", userId)
+          );
+          const nutritionSnapshot = await getDocs(qNutrition);
+          const nutritionCounts = {};
+          nutritionSnapshot.forEach((doc) => {
+            const { date } = doc.data();
+            nutritionCounts[date] = (nutritionCounts[date] || 0) + 1;
+          });
+          setNutritionData(nutritionCounts);
 
           // Fetch workouts
           const qWorkouts = query(
@@ -122,8 +136,8 @@ const Dashboard = () => {
           x: label,
           y: weightsData.data[index],
         })),
-        borderColor: "#FFD700",
-        backgroundColor: "#FFD700 ", // Consider adjusting opacity if needed
+        borderColor: "#FF0000",
+        backgroundColor: "#FF0000 ", // Consider adjusting opacity if needed
         tension: 0.1,
       },
     ],
@@ -213,6 +227,25 @@ const Dashboard = () => {
         </h3>
         <div className="max-w-[800px] mx-8">
           <Line options={weightChartOptions} data={weightChartData} />
+        </div>
+      </div>
+      <div className="mx-8 lg:mx-36 mt-4">
+        <h3 className="scroll-m-20 text-xl font-semibold tracking-tight">
+          Your Nutrition Contribution Graph
+        </h3>
+        <div className="flex justify-center max-w-[800px]">
+          <Calendar
+            values={nutritionData}
+            until={today}
+            panelColors={{
+              0: "#eeeeee",
+              1: "#0000FF",
+              2: "#C0CA33",
+              3: "#AFB42B",
+              4: "#9E9D24",
+              ">4": "#827717",
+            }}
+          />
         </div>
       </div>
     </>
