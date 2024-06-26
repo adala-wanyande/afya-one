@@ -72,9 +72,10 @@ function SignInForm() {
         <div className="flex items-center px-6 py-4">
           <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 w-full">Sign in</button>
         </div>
-        <div className="flex justify-end mx-8 pt-2 pb-8">
-          <span className='text-sm flex items-center'>Don't have an account?</span>
-          <Link className="justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:text-accent-foreground ml-2" to="/signup"><span className='hover:underline'>Sign Up</span></Link>
+        <div className="flex flex-col justify-end mx-8 pt-2 pb-8">
+            <Link className="justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:text-accent-foreground mb-3" to="/forgot-password"><span className='hover:underline'>Forgot Password?</span></Link>
+          <div className='text-sm flex items-center'>Don't have an account? <Link className="justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:text-accent-foreground ml-2" to="/signup"><span className='hover:underline'>Sign Up</span></Link>
+          </div>
         </div>
       </form>
     </div>

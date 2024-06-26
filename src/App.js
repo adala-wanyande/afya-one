@@ -24,6 +24,7 @@ import CreateWeight from "./pages/weight/CreateWeight";
 import ViewWeights from "./pages/weight/ViewWeights";
 import CreateNutritionEntry from "./pages/nutrition/CreateNutrition";
 import ViewNutrition from "./pages/nutrition/ViewNutrition";
+import ForgotPasswordForm from "./pages/auth/ForgotPassword"; // Import the ForgotPasswordForm component
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -44,7 +45,7 @@ const App = () => {
         <div role="status">
           <svg
             aria-hidden="true"
-            class="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-red-600"
+            className="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-red-600"
             viewBox="0 0 100 101"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -58,7 +59,7 @@ const App = () => {
               fill="currentFill"
             />
           </svg>
-          <span class="sr-only">Loading...</span>
+          <span className="sr-only">Loading...</span>
         </div>
       </div>
     );
@@ -81,6 +82,7 @@ const App = () => {
         <Routes>
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/forgot-password" element={<ForgotPasswordForm />} /> {/* Route for Forgot Password form */}
           <Route
             path="/user"
             element={
@@ -172,13 +174,13 @@ const App = () => {
           <Route
             path="/nutrition/new"
             element={
-              isAuthenticated ? <CreateNutritionEntry/> : <Navigate to="/signin" />
+              isAuthenticated ? <CreateNutritionEntry /> : <Navigate to="/signin" />
             }
           />
           <Route
             path="/nutrition/all"
             element={
-              isAuthenticated ? <ViewNutrition/> : <Navigate to="/signin" />
+              isAuthenticated ? <ViewNutrition /> : <Navigate to="/signin" />
             }
           />
           {/* Redirect users to the sign-in page by default if they access the root path */}
