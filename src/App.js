@@ -24,7 +24,8 @@ import CreateWeight from "./pages/weight/CreateWeight";
 import ViewWeights from "./pages/weight/ViewWeights";
 import CreateNutritionEntry from "./pages/nutrition/CreateNutrition";
 import ViewNutrition from "./pages/nutrition/ViewNutrition";
-import ForgotPasswordForm from "./pages/auth/ForgotPassword"; // Import the ForgotPasswordForm component
+import ForgotPasswordForm from "./pages/auth/ForgotPassword";
+import LandingPage from "./pages/landing/LandingPage"; // Import the LandingPage component
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -66,8 +67,6 @@ const App = () => {
   }
 
   const Layout = ({ children }) => {
-    const location = useLocation();
-    const authRoutes = ["/signin", "/signup"];
 
     return (
       <>
@@ -80,9 +79,10 @@ const App = () => {
     <BrowserRouter>
       <Layout>
         <Routes>
+          <Route path="/home" element={<LandingPage />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/forgot-password" element={<ForgotPasswordForm />} /> {/* Route for Forgot Password form */}
+          <Route path="/forgot-password" element={<ForgotPasswordForm />} />
           <Route
             path="/user"
             element={
