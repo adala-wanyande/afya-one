@@ -25,7 +25,7 @@ import ViewWeights from "./pages/weight/ViewWeights";
 import CreateNutritionEntry from "./pages/nutrition/CreateNutrition";
 import ViewNutrition from "./pages/nutrition/ViewNutrition";
 import ForgotPasswordForm from "./pages/auth/ForgotPassword";
-import LandingPage from "./pages/landing/LandingPage"; // Import the LandingPage component
+import LandingPage from "./pages/landing/LandingPage";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -66,138 +66,126 @@ const App = () => {
     );
   }
 
-  const Layout = ({ children }) => {
-
-    return (
-      <>
-        <div>{children}</div>
-      </>
-    );
-  };
-
   return (
     <BrowserRouter>
-      <Layout>
-        <Routes>
-          <Route path="/home" element={<LandingPage />} />
-          <Route path="/signin" element={<SignIn />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/forgot-password" element={<ForgotPasswordForm />} />
-          <Route
-            path="/user"
-            element={
-              isAuthenticated ? <ViewUserInfo /> : <Navigate to="/signin" />
-            }
-          />
-          <Route
-            path="/dashboard"
-            element={
-              isAuthenticated ? <Dashboard /> : <Navigate to="/signin" />
-            }
-          />
-          <Route
-            path="/user/setup"
-            element={
-              isAuthenticated ? (
-                <CreateUserInfoForm />
-              ) : (
-                <Navigate to="/signin" />
-              )
-            }
-          />
-          <Route
-            path="/user/edit"
-            element={
-              isAuthenticated ? <UpdateUserInfo /> : <Navigate to="/signin" />
-            }
-          />
-          <Route
-            path="/workout/new"
-            element={
-              isAuthenticated ? <CreateWorkout /> : <Navigate to="/signin" />
-            }
-          />
-          <Route
-            path="/workout/all"
-            element={
-              isAuthenticated ? <ViewWorkouts /> : <Navigate to="/signin" />
-            }
-          />
-          <Route
-            path="/workout/edit/:id"
-            element={
-              isAuthenticated ? <UpdateWorkout /> : <Navigate to="/signin" />
-            }
-          />
-          <Route
-            path="/split/new"
-            element={
-              isAuthenticated ? (
-                <CreateTrainingSplit />
-              ) : (
-                <Navigate to="/signin" />
-              )
-            }
-          />
-          <Route
-            path="/split/edit/:id"
-            element={
-              isAuthenticated ? (
-                <UpdateTrainingSplit />
-              ) : (
-                <Navigate to="/signin" />
-              )
-            }
-          />
-          <Route
-            path="/split/all"
-            element={
-              isAuthenticated ? (
-                <ViewTrainingSplits />
-              ) : (
-                <Navigate to="/signin" />
-              )
-            }
-          />
-          <Route
-            path="/weight/new"
-            element={
-              isAuthenticated ? <CreateWeight /> : <Navigate to="/signin" />
-            }
-          />
-          <Route
-            path="/weight/all"
-            element={
-              isAuthenticated ? <ViewWeights /> : <Navigate to="/signin" />
-            }
-          />
-          <Route
-            path="/nutrition/new"
-            element={
-              isAuthenticated ? <CreateNutritionEntry /> : <Navigate to="/signin" />
-            }
-          />
-          <Route
-            path="/nutrition/all"
-            element={
-              isAuthenticated ? <ViewNutrition /> : <Navigate to="/signin" />
-            }
-          />
-          {/* Redirect users to the sign-in page by default if they access the root path */}
-          <Route path="/" element={<Navigate to="/signin" />} />
-          {/* Redirect non-authenticated users to the sign-in page for any other routes */}
-          <Route
-            path="*"
-            element={
-              !isAuthenticated ? (
-                <Navigate to="/signin" />
-              ) : (
-                <Navigate to="/dashboard" />
-              )
-            }
-          />
-        </Routes>
-      </Layout>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/home" element={<LandingPage />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/forgot-password" element={<ForgotPasswordForm />} />
+        <Route
+          path="/user"
+          element={
+            isAuthenticated ? <ViewUserInfo /> : <Navigate to="/signin" />
+          }
+        />
+        <Route
+          path="/dashboard"
+          element={
+            isAuthenticated ? <Dashboard /> : <Navigate to="/signin" />
+          }
+        />
+        <Route
+          path="/user/setup"
+          element={
+            isAuthenticated ? (
+              <CreateUserInfoForm />
+            ) : (
+              <Navigate to="/signin" />
+            )
+          }
+        />
+        <Route
+          path="/user/edit"
+          element={
+            isAuthenticated ? <UpdateUserInfo /> : <Navigate to="/signin" />
+          }
+        />
+        <Route
+          path="/workout/new"
+          element={
+            isAuthenticated ? <CreateWorkout /> : <Navigate to="/signin" />
+          }
+        />
+        <Route
+          path="/workout/all"
+          element={
+            isAuthenticated ? <ViewWorkouts /> : <Navigate to="/signin" />
+          }
+        />
+        <Route
+          path="/workout/edit/:id"
+          element={
+            isAuthenticated ? <UpdateWorkout /> : <Navigate to="/signin" />
+          }
+        />
+        <Route
+          path="/split/new"
+          element={
+            isAuthenticated ? (
+              <CreateTrainingSplit />
+            ) : (
+              <Navigate to="/signin" />
+            )
+          }
+        />
+        <Route
+          path="/split/edit/:id"
+          element={
+            isAuthenticated ? (
+              <UpdateTrainingSplit />
+            ) : (
+              <Navigate to="/signin" />
+            )
+          }
+        />
+        <Route
+          path="/split/all"
+          element={
+            isAuthenticated ? (
+              <ViewTrainingSplits />
+            ) : (
+              <Navigate to="/signin" />
+            )
+          }
+        />
+        <Route
+          path="/weight/new"
+          element={
+            isAuthenticated ? <CreateWeight /> : <Navigate to="/signin" />
+          }
+        />
+        <Route
+          path="/weight/all"
+          element={
+            isAuthenticated ? <ViewWeights /> : <Navigate to="/signin" />
+          }
+        />
+        <Route
+          path="/nutrition/new"
+          element={
+            isAuthenticated ? <CreateNutritionEntry /> : <Navigate to="/signin" />
+          }
+        />
+        <Route
+          path="/nutrition/all"
+          element={
+            isAuthenticated ? <ViewNutrition /> : <Navigate to="/signin" />
+          }
+        />
+        {/* Redirect non-authenticated users to the sign-in page for any other routes */}
+        <Route
+          path="*"
+          element={
+            !isAuthenticated ? (
+              <Navigate to="/signin" />
+            ) : (
+              <Navigate to="/dashboard" />
+            )
+          }
+        />
+      </Routes>
     </BrowserRouter>
   );
 };

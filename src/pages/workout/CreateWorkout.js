@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { auth, db } from "../../firebase-config";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, collection, getDocs } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import LoadingButton from "../../components/buttons/LoadingButton";
 import NavBar from "../../components/navigation/NavBar";
 
 function CreateWorkout() {
   const [date, setDate] = useState("");
-  const [bodyPart, setBodyPart] = useState("");
+  const [trainingSplits, setTrainingSplits] = useState([]);
+  const [selectedSplit, setSelectedSplit] = useState("");
+  const [trainingDays, setTrainingDays] = useState([]);
+  const [selectedDay, setSelectedDay] = useState("");
   const [workouts, setWorkouts] = useState([
     {
       name: "",
@@ -20,7 +23,7 @@ function CreateWorkout() {
     },
   ]);
   const navigate = useNavigate();
-  const [isSubmitting, setIsSubmitting] = useState(false); // State to track form submission status
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const user = auth.currentUser;
@@ -28,6 +31,72 @@ function CreateWorkout() {
       navigate("/signin");
     }
   }, [navigate]);
+
+  useEffect(() => {
+    const fetchTrainingSplits = async () => {
+      const user = auth.currentUser;
+      if (user) {
+        const splitsCollection = collection(db, "trainingSplits");
+        const splitDocs = await getDocs(splitsCollection);
+        const splits = splitDocs.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setTrainingSplits(splits);
+      }
+    };
+
+    fetchTrainingSplits();
+  }, []);
+
+  useEffect(() => {
+    if (selectedSplit) {
+      const selectedSplitData = trainingSplits.find(
+        (split) => split.id === selectedSplit
+      );
+      if (selectedSplitData) {
+        setTrainingDays(selectedSplitData.trainingDays || []);
+      }
+    } else {
+      setTrainingDays([]);
+    }
+  }, [selectedSplit, trainingSplits]);
+
+  useEffect(() => {
+    if (selectedSplit && selectedDay) {
+      const selectedSplitData = trainingSplits.find(
+        (split) => split.id === selectedSplit
+      );
+      const selectedDayData = selectedSplitData.trainingDays.find(
+        (day) => day.name === selectedDay
+      );
+      if (selectedDayData) {
+        setWorkouts(
+          selectedDayData.exercises.map((exercise) => ({
+            name: exercise.name,
+            reps: exercise.reps,
+            sets: exercise.sets,
+            weight: "",
+            nextWeight: "",
+            nextReps: "",
+            nextSets: "",
+          }))
+        );
+      }
+    } else {
+      setWorkouts([
+        {
+          name: "",
+          weight: "",
+          reps: "",
+          sets: "",
+          nextWeight: "",
+          nextReps: "",
+          nextSets: "",
+        },
+      ]);
+    }
+  }, [selectedSplit, selectedDay, trainingSplits]);
 
   const addWorkoutField = () => {
     setWorkouts([
@@ -59,11 +128,11 @@ function CreateWorkout() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmitting(true); // Begin submission, disable the button
+    setIsSubmitting(true);
     const user = auth.currentUser;
     if (user) {
       const userId = user.uid;
-      const workoutData = { date, bodyPart, workouts, userId };
+      const workoutData = { date, selectedSplit, selectedDay, workouts, userId };
 
       try {
         await setDoc(
@@ -74,7 +143,7 @@ function CreateWorkout() {
         navigate("/dashboard/");
       } catch (error) {
         console.error("Error adding workout: ", error);
-        setIsSubmitting(false); // In case of error, re-enable the button
+        setIsSubmitting(false);
       }
     }
   };
@@ -105,20 +174,52 @@ function CreateWorkout() {
           </div>
           <div className="mb-5">
             <label
-              htmlFor="date"
+              htmlFor="split"
+              className="block mb-2 text-base font-medium text-gray-900 dark:text-white"
+            >
+              Training Split
+            </label>
+            <select
+              id="split"
+              value={selectedSplit}
+              onChange={(e) => setSelectedSplit(e.target.value)}
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
+              required
+            >
+              <option value="" disabled>
+                Select a training split
+              </option>
+              {trainingSplits.map((split) => (
+                <option key={split.id} value={split.id}>
+                  {split.splitName}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="mb-5">
+            <label
+              htmlFor="day"
               className="block mb-2 text-base font-medium text-gray-900 dark:text-white"
             >
               Training Day
             </label>
-            <input
-              type="text"
-              name="bodyPart"
-              value={bodyPart}
-              onChange={(e) => setBodyPart(e.target.value)}
-              placeholder="e.g Leg Day, Upper Body, Chest etc."
+            <select
+              id="day"
+              value={selectedDay}
+              onChange={(e) => setSelectedDay(e.target.value)}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
               required
-            />
+              disabled={!selectedSplit}
+            >
+              <option value="" disabled>
+                Select a training day
+              </option>
+              {trainingDays.map((day, index) => (
+                <option key={index} value={day.name}>
+                  {day.name}
+                </option>
+              ))}
+            </select>
           </div>
           {workouts.map((workout, index) => (
             <div key={index} className="mb-5">
@@ -183,14 +284,14 @@ function CreateWorkout() {
                 placeholder="Next Target Sets"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
               />
-              <div class="flex justify-end">
+              <div className="flex justify-end">
                 <button
                   type="button"
                   onClick={() => removeWorkoutField(index)}
-                  class="text-white bg-[#F07F7F] hover:bg-[#D09E9E] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-3 py-1 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  className="text-white bg-[#F07F7F] hover:bg-[#D09E9E] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-3 py-1 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 >
                   <svg
-                    class="w-6 h-6 text-white mr-2"
+                    className="w-6 h-6 text-white mr-2"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -198,9 +299,9 @@ function CreateWorkout() {
                   >
                     <path
                       stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
                       d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
                     />
                   </svg>
@@ -209,10 +310,10 @@ function CreateWorkout() {
               </div>
             </div>
           ))}
-          <div class="flex justify-center">
+          <div className="flex justify-center">
             <button
               type="button"
-              class="mt-4 text-white bg-black hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              className="mt-4 text-white bg-black hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               onClick={addWorkoutField}
             >
               + Add another exercise to the workout
