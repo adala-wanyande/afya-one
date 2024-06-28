@@ -10,8 +10,8 @@ function CreateUserInfoForm() {
   const [height, setHeight] = useState("");
   const navigate = useNavigate();
   const [shouldRenderForm, setShouldRenderForm] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false); // State to track form submission status
-  const [errors, setErrors] = useState({}); // New state for managing input validation errors
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     const checkUserInfo = async () => {
@@ -38,23 +38,21 @@ function CreateUserInfoForm() {
   const validateForm = () => {
     let newErrors = {};
     if (!fullName.trim()) newErrors.fullName = "Name is required.";
-    // Assuming dateOfBirth is in 'YYYY-MM-DD' format for simplicity. Adjust validation as needed.
     if (!dateOfBirth) newErrors.dateOfBirth = "Date of birth is required.";
-    if (startingWeight <= 0)
-      newErrors.startingWeight = "Starting weight must be greater than zero.";
+    if (startingWeight <= 0) newErrors.startingWeight = "Starting weight must be greater than zero.";
     if (height <= 0) newErrors.height = "Height must be greater than zero.";
 
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0; // Returns true if no errors
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmitting(true); // Begin submission, disable the button
+    setIsSubmitting(true);
 
     if (!validateForm()) {
-      setIsSubmitting(false); // Re-enable the button if validation fails
-      return; // Prevent form submission
+      setIsSubmitting(false);
+      return;
     }
 
     const user = auth.currentUser;
@@ -68,7 +66,7 @@ function CreateUserInfoForm() {
         navigate("/dashboard/");
       } catch (error) {
         console.error("Error adding document: ", error);
-        setIsSubmitting(false); // In case of error, re-enable the button
+        setIsSubmitting(false);
       }
     }
   };
@@ -78,26 +76,21 @@ function CreateUserInfoForm() {
   }
 
   return (
-    <div class="justify-center flex mt-16">
-      <div class="rounded-xl border bg-card text-card-foreground shadow w-[340px]">
-        <div class="flex flex-col p-6 space-y-1">
-          <h3 class="font-semibold tracking-tight text-2xl">
-            Welcome to Afya One!
-          </h3>
-          <p class="text-sm text-muted-foreground">
-            Let's get to know you. Feel free to share. This is a safe space.
-          </p>
+    <div className="flex justify-center mt-16">
+      <div className="rounded-lg border bg-white text-black shadow-md w-full max-w-md">
+        <div className="flex flex-col p-6 space-y-3">
+          <h3 className="font-semibold tracking-tight text-2xl">Welcome to Afya One!</h3>
+          <p className="text-base text-gray-600">Let's get to know you. Feel free to share. This is a safe space.</p>
         </div>
-        <form onSubmit={handleSubmit} class="p-6 pt-0 grid gap-4">
-          <div class="grid gap-2">
-            <label class="text-sm font-medium leading-none" for="fullName">
-              What's your name?
-            </label>
+        <form onSubmit={handleSubmit} className="px-6 py-2 pt-0 grid gap-4">
+          <div className="grid gap-2">
+            <label className="text-base font-medium" htmlFor="fullName">What's your name?</label>
             <input
-              class="w-full flex h-9 rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              className="w-full h-10 rounded-md border border-gray-300 bg-transparent px-3 py-2 text-base shadow-sm transition focus:outline-none focus:ring-2 focus:ring-red-500"
               id="fullName"
               type="text"
               value={fullName}
+              placeholder="One name is fine"
               onChange={(e) => setFullName(e.target.value)}
               required
             />
@@ -105,27 +98,23 @@ function CreateUserInfoForm() {
               <div className="text-red-500 text-sm">{errors.fullName}</div>
             )}
           </div>
-          <div class="grid gap-2">
-            <label class="text-sm font-medium leading-none" for="dateOfBirth">
-              When were you born?
-            </label>
+          <div className="grid gap-2">
+            <label className="text-base font-medium" htmlFor="dateOfBirth">When were you born?</label>
             <input
-              class="w-[160px] flex h-9 rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              className="w-[160px] h-10 rounded-md border border-gray-300 bg-transparent px-3 py-2 text-base shadow-sm transition focus:outline-none focus:ring-2 focus:ring-red-500"
               type="date"
               name="dateOfBirth"
               value={dateOfBirth}
               onChange={(e) => setDateOfBirth(e.target.value)}
             />
+            {errors.dateOfBirth && (
+              <div className="text-red-500 text-sm">{errors.dateOfBirth}</div>
+            )}
           </div>
-          <div class="grid gap-2">
-            <label
-              class="text-sm font-medium leading-none"
-              for="startingWeight"
-            >
-              What's your starting weight? (kg)
-            </label>
+          <div className="grid gap-2">
+            <label className="text-base font-medium" htmlFor="startingWeight">What's your starting weight? (kg)</label>
             <input
-              class="w-full flex h-9 rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              className="w-full h-10 rounded-md border border-gray-300 bg-transparent px-3 py-2 text-base shadow-sm transition focus:outline-none focus:ring-2 focus:ring-red-500"
               id="startingWeight"
               type="number"
               value={startingWeight}
@@ -134,17 +123,13 @@ function CreateUserInfoForm() {
               required
             />
             {errors.startingWeight && (
-              <div className="text-red-500 text-sm">
-                {errors.startingWeight}
-              </div>
+              <div className="text-red-500 text-sm">{errors.startingWeight}</div>
             )}
           </div>
-          <div class="grid gap-2">
-            <label class="text-sm font-medium leading-none" for="height">
-              What's your starting height? (cm)
-            </label>
+          <div className="grid gap-2">
+            <label className="text-base font-medium" htmlFor="height">What's your starting height? (cm)</label>
             <input
-              class="w-full flex h-9 rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              className="w-full h-10 rounded-md border border-gray-300 bg-transparent px-3 py-2 text-base shadow-sm transition focus:outline-none focus:ring-2 focus:ring-red-500"
               id="height"
               type="number"
               value={height}
@@ -156,10 +141,10 @@ function CreateUserInfoForm() {
               <div className="text-red-500 text-sm">{errors.height}</div>
             )}
           </div>
-          <div class="flex items-center pt-4">
+          <div className="flex items-center py-4">
             <button
               type="submit"
-              class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 w-full"
+              className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors bg-red-500 text-white shadow hover:bg-red-600 h-10 px-4 py-2 w-full"
             >
               {isSubmitting ? "Submitting..." : "Submit"}
             </button>
