@@ -7,8 +7,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import Calendar from "react-github-contribution-calendar";
 import NavBar from "../../components/navigation/NavBar";
-
-// Import Chart.js components
+import UserInsightsPanel from "./UserInsightsPanel";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -23,7 +22,6 @@ import {
   TimeSeriesScale,
 } from "chart.js";
 
-// ChartJS registration
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -61,7 +59,8 @@ const Dashboard = () => {
           const userDocRef = doc(db, "users", userId);
           const userDocSnap = await getDoc(userDocRef);
           if (userDocSnap.exists()) {
-            const fullName = userDocSnap.data().fullName;
+            const userData = userDocSnap.data();
+            const fullName = userData.fullName;
             const firstName = fullName.split(" ")[0];
             setFirstName(firstName);
           } else {
@@ -103,9 +102,7 @@ const Dashboard = () => {
           const weights = [];
           querySnapshotWeights.forEach((doc) => {
             const data = doc.data();
-            // Convert Firestore Timestamp to JavaScript Date object
             const date = data.date.toDate();
-            // Optionally convert to string for easier handling, e.g., date.toISOString().split('T')[0]
             dates.push(date);
             weights.push(data.weight);
           });
@@ -137,7 +134,7 @@ const Dashboard = () => {
           y: weightsData.data[index],
         })),
         borderColor: "#FF0000",
-        backgroundColor: "#FF0000 ", // Consider adjusting opacity if needed
+        backgroundColor: "rgba(255, 0, 0, 0.2)", // Consider adjusting opacity if needed
         tension: 0.1,
       },
     ],
@@ -183,7 +180,7 @@ const Dashboard = () => {
         <div role="status">
           <svg
             aria-hidden="true"
-            class="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-red-600"
+            className="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-red-600"
             viewBox="0 0 100 101"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -197,7 +194,7 @@ const Dashboard = () => {
               fill="currentFill"
             />
           </svg>
-          <span class="sr-only">Loading...</span>
+          <span className="sr-only">Loading...</span>
         </div>
       </div>
     );
@@ -205,48 +202,51 @@ const Dashboard = () => {
 
   return (
     <>
-      <NavBar></NavBar>
-      <div className="mx-8 lg:mx-36 lg:scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-8">
+      <NavBar />
+      <div className="flex flex-col lg:flex-row mx-8 lg:mx-36 lg:scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-8">
         <h1>Welcome, {firstName}!</h1>
       </div>
-      <div className="mx-8 lg:mx-36 mt-4">
-        <h3 className="scroll-m-20 text-xl font-semibold tracking-tight">
-          Your Workout Contribution Graph
-        </h3>
-      </div>
-      <div className="mx-8 lg:mx-36 mt-4 flex justify-center max-w-[800px]">
-        <Calendar
-          values={workoutData}
-          until={today}
-          panelColors={panelColors}
+      <div className="flex flex-col lg:flex-row mx-8 lg:mx-36 mt-4 gap-8">
+        <div className="flex-1">
+          <h3 className="scroll-m-20 text-xl font-semibold tracking-tight">
+            Your Workout Contribution Graph
+          </h3>
+          <div className="mt-4 flex justify-center max-w-[800px]">
+            <Calendar
+              values={workoutData}
+              until={today}
+              panelColors={panelColors}
+            />
+          </div>
+          <h3 className="scroll-m-20 text-xl font-semibold tracking-tight mt-8">
+            Your Weight Progress
+          </h3>
+          <div className="max-w-[800px] mx-auto mt-4">
+            <Line options={weightChartOptions} data={weightChartData} />
+          </div>
+          <h3 className="scroll-m-20 text-xl font-semibold tracking-tight mt-8">
+            Your Nutrition Contribution Graph
+          </h3>
+          <div className="my-4 flex justify-center max-w-[800px] mx-auto">
+            <Calendar
+              values={nutritionData}
+              until={today}
+              panelColors={{
+                0: "#eeeeee",
+                1: "#00FF00",
+                2: "#76FF03",
+                3: "#64DD17",
+                4: "#33691E",
+                ">4": "#1B5E20",
+              }}
+            />
+          </div>
+        </div>
+        <UserInsightsPanel
+          workoutData={workoutData}
+          weightsData={weightsData}
+          nutritionData={nutritionData}
         />
-      </div>
-      <div className="mx-8 lg:mx-36 mt-8">
-        <h3 className="scroll-m-20 text-xl font-semibold tracking-tight">
-          Your Weight Progress
-        </h3>
-        <div className="max-w-[800px] mx-8">
-          <Line options={weightChartOptions} data={weightChartData} />
-        </div>
-      </div>
-      <div className="mx-8 lg:mx-36 mt-4">
-        <h3 className="scroll-m-20 text-xl font-semibold tracking-tight">
-          Your Nutrition Contribution Graph
-        </h3>
-        <div className="flex justify-center max-w-[800px]">
-          <Calendar
-            values={nutritionData}
-            until={today}
-            panelColors={{
-              0: "#eeeeee",
-              1: "#0000FF",
-              2: "#C0CA33",
-              3: "#AFB42B",
-              4: "#9E9D24",
-              ">4": "#827717",
-            }}
-          />
-        </div>
       </div>
     </>
   );
