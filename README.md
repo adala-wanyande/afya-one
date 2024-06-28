@@ -1,7 +1,5 @@
 # Afya One
 
-![Afya One Logo](./src/assets/images/afya-one-logo.jpg)
-
 ## Project Overview
 
 Afya One is a comprehensive health and fitness tracking application designed to help users monitor their workouts, weight progress, and nutrition contributions. The dashboard provides insightful data visualizations and key health metrics to support users in achieving their fitness goals.
