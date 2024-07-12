@@ -64,7 +64,7 @@ function CreateWorkout() {
   }, [selectedSplit, trainingSplits]);
 
   useEffect(() => {
-    if (selectedSplit && selectedDay) {
+    if (selectedSplit && selectedDay && workoutOption === "existing") {
       const selectedSplitData = trainingSplits.find(
         (split) => split.id === selectedSplit
       );
@@ -84,6 +84,18 @@ function CreateWorkout() {
           }))
         );
       }
+    } else if (workoutOption === "new") {
+      setWorkouts([
+        {
+          name: "",
+          weight: "",
+          reps: "",
+          sets: "",
+          nextWeight: "",
+          nextReps: "",
+          nextSets: "",
+        },
+      ]);
     } else {
       setWorkouts([
         {
@@ -97,7 +109,7 @@ function CreateWorkout() {
         },
       ]);
     }
-  }, [selectedSplit, selectedDay, trainingSplits]);
+  }, [selectedSplit, selectedDay, trainingSplits, workoutOption]);
 
   const addWorkoutField = () => {
     setWorkouts([
@@ -261,7 +273,8 @@ function CreateWorkout() {
             </>
           )}
 
-          {workoutOption === "new" &&
+          {(workoutOption === "new" ||
+            (workoutOption === "existing" && selectedSplit && selectedDay)) &&
             workouts.map((workout, index) => (
               <div key={index} className="mb-5">
                 <label className="block mb-2 text-base font-medium text-gray-900 dark:text-white">
@@ -351,7 +364,8 @@ function CreateWorkout() {
               </div>
             ))}
 
-          {workoutOption === "new" && (
+          {(workoutOption === "new" ||
+            (workoutOption === "existing" && selectedSplit && selectedDay)) && (
             <div className="flex justify-center">
               <button
                 type="button"
