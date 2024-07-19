@@ -11,6 +11,7 @@ function CreateWorkout() {
   const [selectedSplit, setSelectedSplit] = useState("");
   const [trainingDays, setTrainingDays] = useState([]);
   const [selectedDay, setSelectedDay] = useState("");
+  const [bodyPart, setBodyPart] = useState("");
   const [workouts, setWorkouts] = useState([
     {
       name: "",
@@ -219,6 +220,28 @@ function CreateWorkout() {
             />
           </div>
 
+          {workoutOption === "new" && (
+            <>
+              <div className="mb-5">
+                <label
+                  htmlFor="bodyPart"
+                  className="block mb-2 text-base font-medium text-gray-900 dark:text-white"
+                >
+                  Body Part
+                </label>
+                <input
+                  type="text"
+                  id="bodyPart"
+                  value={bodyPart}
+                  onChange={(e) => setBodyPart(e.target.value)}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="Enter the body part"
+                  required
+                />
+              </div>
+            </>
+          )}
+
           {workoutOption === "existing" && (
             <>
               <div className="mb-5">
@@ -276,7 +299,7 @@ function CreateWorkout() {
           {(workoutOption === "new" ||
             (workoutOption === "existing" && selectedSplit && selectedDay)) &&
             workouts.map((workout, index) => (
-              <div key={index} className="mb-5">
+              <div key={index} className="mb-4 border border-gray-300 p-4 rounded-lg">
                 <label className="block mb-2 text-base font-medium text-gray-900 dark:text-white">
                   Exercise {index + 1}
                 </label>

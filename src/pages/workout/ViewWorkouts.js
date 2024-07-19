@@ -117,7 +117,7 @@ function ViewWorkouts() {
               <li key={workout.id} className="mb-2">
                 <div className="flex flex-col md:flex-row justify-between items-center">
                   <h3 className="lg:scroll-m-20 text-xl font-semibold tracking-tight text-[#C62828]">
-                    {format(workout.date, "MMMM dd, yyyy")} - {workout.bodyPart}
+                    {format(workout.date, "MMMM dd, yyyy")} - {workout.bodyPart || workout.selectedDay}
                   </h3>
                   <div className="flex items-center mt-4">
                     <button
