@@ -224,7 +224,7 @@ const Dashboard = () => {
           <div className="max-w-[800px] mx-auto mt-4">
             <Line options={weightChartOptions} data={weightChartData} />
           </div>
-          <h3 className="scroll-m-20 text-xl font-semibold tracking-tight mt-8">
+          {/* <h3 className="scroll-m-20 text-xl font-semibold tracking-tight mt-8">
             Your Nutrition Contribution Graph
           </h3>
           <div className="my-4 flex justify-center max-w-[800px] mx-auto">
@@ -240,7 +240,7 @@ const Dashboard = () => {
                 ">4": "#1B5E20",
               }}
             />
-          </div>
+          </div> */}
         </div>
         <UserInsightsPanel
           workoutData={workoutData}
