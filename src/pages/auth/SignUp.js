@@ -93,7 +93,7 @@ function SignUpForm() {
         </div>
       </header>
 
-      <div className="flex justify-center mt-16">
+      <div className="flex justify-center mt-16 mx-8">
         <form onSubmit={handleSubmit} className="rounded-lg border bg-white text-black shadow-md w-full max-w-md">
           <div className="flex flex-col p-6 space-y-3">
             <h3 className="font-semibold tracking-tight text-2xl">Create an account</h3>
